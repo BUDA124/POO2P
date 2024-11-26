@@ -30,6 +30,7 @@ public class SafetyGuideController {
         System.out.print("Seleccione una opción: ");
     }
 
+
     // Actualizar el método start() para incluir la nueva opción
     public void start() {
         while (true) {
@@ -56,6 +57,7 @@ public class SafetyGuideController {
             }
         }
     }
+
 
     public void menuOpcionesUsuario() {
         while(true) {
@@ -91,6 +93,7 @@ public class SafetyGuideController {
 
     }
 
+
     public static int getIntInput(Scanner scanner) {
         int option = -1;
 
@@ -102,6 +105,7 @@ public class SafetyGuideController {
 
         return option;
     }
+
 
     public void logIn() {
         System.out.print("Ingrese su nombre de usuario: ");
@@ -126,6 +130,7 @@ public class SafetyGuideController {
             System.out.println("Usuario no encontrado o contraseña incorrecta.");
         }
     }
+
 
     public void register() {
         ArrayList<User> usuariosExistentes = FileHandler.loadUsers();
@@ -174,17 +179,20 @@ public class SafetyGuideController {
         }
     }
 
+
     public void forgotPassword() {
         System.out.print("Ingrese su correo electrónico: ");
         String correo = scanner.nextLine();
         System.out.println("Se ha enviado un enlace para restablecer su contraseña al correo: " + correo);
     }
 
+
     public void forgotUser() {
         System.out.print("Ingrese su correo electrónico: ");
         String correo = scanner.nextLine();
         System.out.println("Se ha enviado su nombre de usuario al correo: " + correo);
     }
+
 
     public void ofreceTuFeedback() {
         System.out.print("Asunto: ");
@@ -193,6 +201,7 @@ public class SafetyGuideController {
         String descripcion = scanner.nextLine();
         System.out.println("Sugerencia enviada con éxito.");
     }
+
 
     public void conocerMasSobreRiesgos() {
         while(true) {
@@ -226,6 +235,7 @@ public class SafetyGuideController {
 
     }
 
+
     private void createNewGuide() {
         while(true) {
             System.out.println("Seleccione una opción:");
@@ -251,6 +261,7 @@ public class SafetyGuideController {
         }
     }
 
+
     public void createBasicGuide() {
         SafetyGuide guiaBasica = new BasicSafetyGuide();
         guiaBasica.mostrarRiesgosYPrevenciones();
@@ -258,12 +269,14 @@ public class SafetyGuideController {
         guiaBasica.interactuarChecklist(scanner);
     }
 
+
     public void createCustomGuide() {
         CustomSafetyGuide guiaPersonalizada = new CustomSafetyGuide(scanner);
         guiaPersonalizada.mostrarRiesgosYPrevenciones();
         guiaPersonalizada.mostrarChecklist();
         guiaPersonalizada.interactuarChecklist(scanner);
     }
+
 
     public void accederAGuiasGuardadas() {
         System.out.println("Aquí deberían salir las distintas guías disponibles y seleccionar");
@@ -298,6 +311,7 @@ public class SafetyGuideController {
 
     }
 
+
     private void viewExistingGuides() {
         List<SafetyGuide> guides = service.getAllGuides();
         if (guides.isEmpty()) {
@@ -312,6 +326,7 @@ public class SafetyGuideController {
             System.out.println("Fecha de creación: " + guide.getCreationDate());
         }
     }
+
 
     private void generatePDF() {
         System.out.print("\nIngrese el ID de la guía para generar PDF: ");
