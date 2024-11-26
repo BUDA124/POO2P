@@ -1,16 +1,17 @@
-import repositories.SafetyGuideRepository;
-import services.SafetyGuideService;
-import controllers.SafetyGuideController;
-import repositories.FileBasedSafetyGuideRepository;
 
-public class Main {
-    public static void main(String[] args) {
-        // Initialize components
-        SafetyGuideRepository repository = new FileBasedSafetyGuideRepository();
-        SafetyGuideService service = new SafetyGuideService(repository);
-        SafetyGuideController controller = new SafetyGuideController(service);
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-        // Start the app
-        controller.start();
+public class Main extends Application {
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("view/scenes/mainWindow.fxml"));
+        stage.setTitle("Hello World");
+        stage.setScene(new Scene(root, 800, 500));
+        stage.show();
     }
 }
