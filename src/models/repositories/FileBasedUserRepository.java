@@ -20,20 +20,19 @@ public class FileBasedUserRepository implements Repository<User> {
         FileHandler.saveUsers(users);
     }
 
-    @Override
-    public User save(User user) {
+    public User save(String username, User user) {
         users.put(user.getId(), user);
         saveUsers();
         return user;
     }
 
     @Override
-    public Optional<User> findById(String id) {
-        return Optional.ofNullable(users.get(id));
+    public Optional<User> findById(String username) {
+        return Optional.ofNullable(users.get(username));
     }
 
     @Override
-    public List<User> findAll() {
+    public ArrayList<User> findAll() {
         return new ArrayList<>(users.values());
     }
 

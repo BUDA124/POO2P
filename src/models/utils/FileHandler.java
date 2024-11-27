@@ -3,6 +3,7 @@ package models.utils;
 import models.general.SafetyGuide;
 import models.general.User;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileHandler {
@@ -13,7 +14,7 @@ public class FileHandler {
      * Guarda un mapa de guías de seguridad en un archivo.
      * @param guides el mapa de guías a guardar
      */
-    public static void saveGuides(HashMap<String, SafetyGuide> guides) {
+    public static void saveGuides(HashMap<String, ArrayList<SafetyGuide>> guides) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(GUIDES_FILE_PATH))) {
             oos.writeObject(guides);
         } catch (IOException e) {
@@ -26,7 +27,7 @@ public class FileHandler {
      * Si el archivo no existe o está vacío, retorna un mapa vacío.
      * @return el mapa de guías cargadas
      */
-    public static HashMap<String, SafetyGuide> loadGuides() {
+    public static HashMap<String, ArrayList<SafetyGuide>> loadGuides() {
         File file = new File(GUIDES_FILE_PATH);
         if (!file.exists()) {
             System.out.println("Archivo no encontrado. Creando uno nuevo...");
@@ -35,7 +36,7 @@ public class FileHandler {
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            return (HashMap<String, SafetyGuide>) ois.readObject();
+            return (HashMap<String, ArrayList<SafetyGuide>>) ois.readObject();
         } catch (EOFException e) {
             System.out.println("El archivo está vacío. Inicializando mapa vacío...");
             return new HashMap<>();

@@ -2,29 +2,31 @@ package models.services;
 
 import com.itextpdf.io.IOException;
 import models.general.*;
+import models.repositories.FileBasedSafetyGuideRepository;
 import models.repositories.Repository;
 import models.utils.PDFGenerator;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class SafetyGuideService {
-    private final Repository repository;
+    private final FileBasedSafetyGuideRepository guidesRepo;
     private final PDFGenerator pdfGenerator;
+    private User currentUser;
 
-    public SafetyGuideService(Repository repository) {
-        this.repository = repository;
+    public SafetyGuideService(FileBasedSafetyGuideRepository repository) {
+        this.guidesRepo = repository;
         this.pdfGenerator = new PDFGenerator();
     }
 
+    public ArrayList<SafetyGuide> findById(String username) {
+        return guidesRepo.findById(username);
+    }
+
     public void generatePDF(String guideId, String outputPath) throws IOException {
-        Optional<SafetyGuide> guide = repository.findById(guideId);
-        if (guide.isPresent()) {
-            try {
-                pdfGenerator.generatePDF(guide.get(), outputPath);
-            } catch (java.io.IOException e) {
-                throw new RuntimeException(e);
-            }
+        ArrayList<SafetyGuide> guide = guidesRepo.findById(guideId);
+        if (!(guide.isEmpty())) {
+            // pdfGenerator.generatePDF(guide.get(currentUser.getUsername()), outputPath);
         } else {
             throw new IllegalArgumentException("Guía no encontrada.");
         }
@@ -45,10 +47,6 @@ public class SafetyGuideService {
         }
     }
 
-    public SafetyGuide createBasicGuide(User user) {
-        return new BasicSafetyGuide();
-    }
-
     public void updateGuide(SafetyGuide updatedGuide) {
         // Validar que el objeto actualizado no sea nulo
         if (updatedGuide == null) {
@@ -56,21 +54,22 @@ public class SafetyGuideService {
         }
 
         // Buscar si la guía existe en el repositorio
-        Optional<SafetyGuide> existingGuide = repository.findById(updatedGuide.getId());
-        if (existingGuide.isPresent()) {
+        ArrayList<SafetyGuide> existingGuide = guidesRepo.findById(updatedGuide.getId());
+        if (!(existingGuide.isEmpty())) {
             // Reemplazar la guía en el repositorio con la versión actualizada
-            repository.save(updatedGuide);
+            guidesRepo.save(currentUser.getUsername(), updatedGuide);
         } else {
             throw new IllegalArgumentException("La guía de seguridad con ID " + updatedGuide.getId() + " no existe.");
         }
     }
-    public List<SafetyGuide> getAllGuides() {
-        return repository.findAll();
+
+    public ArrayList<ArrayList<SafetyGuide>> getAllGuides() {
+        return guidesRepo.findAll();
     }
-    public Optional<SafetyGuide> getGuideById(String guideId) {
-        if (guideId == null || guideId.isEmpty()) {
-            throw new IllegalArgumentException("El ID de la guía no puede ser nulo o vacío.");
-        }
-        return repository.findById(guideId);
+
+    public void save(String username, SafetyGuide guide) throws IOException {
+        guidesRepo.save(username, guide);
     }
+
+    public void setCurrentUser(User user) { currentUser = user; }
 }

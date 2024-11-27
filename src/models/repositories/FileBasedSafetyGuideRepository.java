@@ -2,10 +2,11 @@ package models.repositories;
 
 import models.general.SafetyGuide;
 import models.utils.FileHandler;
+import java.util.ArrayList;
 import java.util.*;
 
-public class FileBasedSafetyGuideRepository implements Repository<SafetyGuide> {
-    private HashMap<String, SafetyGuide> guides;
+public class FileBasedSafetyGuideRepository {
+    private HashMap<String, ArrayList<SafetyGuide>> guides;
 
     public FileBasedSafetyGuideRepository() {
         this.guides = new HashMap<>();
@@ -20,24 +21,27 @@ public class FileBasedSafetyGuideRepository implements Repository<SafetyGuide> {
         FileHandler.saveGuides(guides);
     }
 
-    @Override
-    public SafetyGuide save(SafetyGuide guide) {
-        guides.put(guide.getId(), guide);
+    public void save(String username, SafetyGuide guide) {
+        guides.compute(username, (k, currentGuides) -> currentGuides);
         saveGuides();
-        return guide;
     }
 
-    @Override
-    public Optional<SafetyGuide> findById(String id) {
-        return Optional.ofNullable(guides.get(id));
+    public ArrayList<SafetyGuide> findById(String username) {
+        return guides.get(username);
     }
 
-    @Override
-    public List<SafetyGuide> findAll() {
+    public ArrayList<ArrayList<SafetyGuide>> findAll() {
+        return (ArrayList<ArrayList<SafetyGuide>>) guides.values();
+    }
+
+    public ArrayList<SafetyGuide> findGuideById(String username) {
+        return guides.get(username);
+    }
+
+    public ArrayList<ArrayList<SafetyGuide>> findAllGuides() {
         return new ArrayList<>(guides.values());
     }
 
-    @Override
     public void delete(String id) {
         guides.remove(id);
         saveGuides();

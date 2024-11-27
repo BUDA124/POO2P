@@ -26,11 +26,11 @@ public abstract class SafetyGuide {
     }
 
     public void mostrarRiesgosYPrevenciones() {
-        System.out.println("Riesgos y Prevenciones:");
+        System.out.println("\nRiesgos y Prevenciones:");
         for (Map.Entry<String, String> entry : riesgosYPrevenciones.entrySet()) {
             System.out.println("Riesgo: " + entry.getKey());
             System.out.println("Prevención: " + entry.getValue());
-            System.out.println("---------------------------");
+            System.out.println("\n---------------------------\n");
         }
     }
 
@@ -55,18 +55,14 @@ public abstract class SafetyGuide {
     }
 
     public void interactuarChecklist(Scanner scanner) {
-        boolean salir = false;
-        while (!salir) {
-            System.out.println("Checklist de Prevenciones:");
-            for (int i = 0; i < checklist.size(); i++) {
-                System.out.println((i + 1) + ". " + checklist.get(i));
-            }
+        while (true) {
+            mostrarChecklist();
 
-            System.out.println("Seleccione el número de la prevención que ha cumplido (0 para salir):");
+            System.out.println("Digite las prevenciones cumplidas (0 para salir):");
             int opcion = SafetyGuideController.getIntInput(scanner);
 
             if (opcion == 0) {
-                salir = true;
+                break;
             } else if (opcion > 0 && opcion <= checklist.size()) {
                 String prevencion = checklist.get(opcion - 1);
                 checklist.set(opcion - 1, prevencion + " (Cumplida)");

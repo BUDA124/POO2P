@@ -1,11 +1,11 @@
 package models.repositories;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public interface Repository<E> {
-    E save(E object);
+    E save(String username, E object);
     Optional<E> findById(String id);
-    List<E> findAll();
+    ArrayList<E> findAll();
     void delete(String id);
 }
