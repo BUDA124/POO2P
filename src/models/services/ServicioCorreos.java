@@ -6,6 +6,8 @@ import jakarta.mail.internet.*;
 
 public class ServicioCorreos {
 
+    public ServicioCorreos() {}
+
     private static final String USERNAME = "construccionguiasseguridad@gmail.com";
     private static final String APP_PASSWORD = "xmrnaxgpxzilhnlq";
 

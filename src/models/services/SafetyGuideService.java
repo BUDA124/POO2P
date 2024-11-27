@@ -3,11 +3,9 @@ package models.services;
 import com.itextpdf.io.IOException;
 import models.general.*;
 import models.repositories.FileBasedSafetyGuideRepository;
-import models.repositories.Repository;
 import models.utils.PDFGenerator;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class SafetyGuideService {
     private final FileBasedSafetyGuideRepository guidesRepo;
@@ -57,7 +55,7 @@ public class SafetyGuideService {
         ArrayList<SafetyGuide> existingGuide = guidesRepo.findById(updatedGuide.getId());
         if (!(existingGuide.isEmpty())) {
             // Reemplazar la guía en el repositorio con la versión actualizada
-            guidesRepo.save(currentUser.getUsername(), updatedGuide);
+            guidesRepo.saveNewGuide(currentUser.getUsername(), updatedGuide);
         } else {
             throw new IllegalArgumentException("La guía de seguridad con ID " + updatedGuide.getId() + " no existe.");
         }
@@ -68,7 +66,11 @@ public class SafetyGuideService {
     }
 
     public void save(String username, SafetyGuide guide) throws IOException {
-        guidesRepo.save(username, guide);
+        guidesRepo.saveNewGuide(username, guide);
+    }
+
+    public void createArrayForUser(String username) {
+        guidesRepo.createArraySpace(username);
     }
 
     public void setCurrentUser(User user) { currentUser = user; }

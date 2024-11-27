@@ -21,8 +21,13 @@ public class FileBasedSafetyGuideRepository {
         FileHandler.saveGuides(guides);
     }
 
-    public void save(String username, SafetyGuide guide) {
-        guides.compute(username, (k, currentGuides) -> currentGuides);
+    public void saveNewGuide(String username, SafetyGuide guide) {
+        guides.get(username).add(guide);
+        saveGuides();
+    }
+
+    public void createArraySpace(String username) {
+        guides.put(username, new ArrayList<>());
         saveGuides();
     }
 
@@ -34,16 +39,8 @@ public class FileBasedSafetyGuideRepository {
         return (ArrayList<ArrayList<SafetyGuide>>) guides.values();
     }
 
-    public ArrayList<SafetyGuide> findGuideById(String username) {
-        return guides.get(username);
-    }
-
-    public ArrayList<ArrayList<SafetyGuide>> findAllGuides() {
-        return new ArrayList<>(guides.values());
-    }
-
-    public void delete(String id) {
-        guides.remove(id);
+    public void delete(String username) {
+        guides.remove(username);
         saveGuides();
     }
 }

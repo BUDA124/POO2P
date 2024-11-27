@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileHandler {
+
     private static final String GUIDES_FILE_PATH = "src/DataFiles/safetyGuides.dat";
     private static final String USERS_FILE_PATH = "src/DataFiles/users.dat";
 
@@ -17,6 +18,8 @@ public class FileHandler {
     public static void saveGuides(HashMap<String, ArrayList<SafetyGuide>> guides) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(GUIDES_FILE_PATH))) {
             oos.writeObject(guides);
+        } catch (NotSerializableException e) {
+            System.err.println("Un objeto no es serializable: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("Error al guardar las guías: " + e.getMessage());
         }

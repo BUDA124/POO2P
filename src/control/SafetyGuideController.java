@@ -3,19 +3,25 @@ package control;
 import com.itextpdf.io.IOException;
 import models.general.*;
 import models.services.SafetyGuideService;
+import models.services.ServicioCorreos;
+import models.services.UserService;
 import models.utils.FileHandler;
 
 import java.util.*;
 
 public class SafetyGuideController {
-    private final SafetyGuideService service;
+    private final SafetyGuideService guideService;
+    private final UserService userService;
     private final Scanner scanner;
-    private FileHandler fileHandler;
+    private final ServicioCorreos servicioCorreos;
     private User currentUser;
 
-    public SafetyGuideController(SafetyGuideService service) {
-        this.service = service;
+    public SafetyGuideController(SafetyGuideService guideService, UserService userService, ServicioCorreos servicioCorreos) {
+        this.guideService = guideService;
+        this.userService = userService;
+        this.servicioCorreos = servicioCorreos;
         this.scanner = new Scanner(System.in);
+
     }
 
 
@@ -107,50 +113,51 @@ public class SafetyGuideController {
 
     public void logIn() {
         System.out.print("Ingrese su nombre de usuario: ");
-        String nombreUsuario = scanner.nextLine();
+        String currentUsername = scanner.nextLine();
         System.out.print("Ingrese su contraseña: ");
         String contrasena = scanner.nextLine();
 
-        // Cargar usuarios desde el archivo como un HashMap
-        HashMap<String, User> usersFromFile = fileHandler.loadUsers();
+        Optional<User> optionalUser = userService.findById(currentUsername);
 
-        if (usersFromFile.isEmpty()) {
-            System.out.println("No hay usuarios registrados.");
+        User user;
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        }
+        else {
+            System.out.println("Usuario no encontrado.");
             return;
         }
 
-        // Buscar usuario por nombre de usuario (clave del HashMap)
-        User user = usersFromFile.get(nombreUsuario);
-
-        if (user != null) {
-            // Validar contraseña
-            if (user.validatePassword(contrasena)) {
-                System.out.println("Inicio de sesión exitoso. Bienvenido, " + user.getName());
-                currentUser = user; // Asignar el usuario actual
-                service.setCurrentUser(currentUser);
-                menuOpcionesUsuario(); // Llamar al menú de opciones
-            } else {
-                System.out.println("Contraseña incorrecta. Intenta de nuevo.");
-            }
+        // Validar contraseña
+        if (user.validatePassword(contrasena)) {
+            System.out.println("Inicio de sesión exitoso. Bienvenido, " + user.getName());
+            currentUser = user; // Asignar el usuario actual
+            guideService.setCurrentUser(currentUser);
+            menuOpcionesUsuario(); // Llamar al menú de opciones
         } else {
-            System.out.println("Usuario no encontrado. Verifica tu nombre de usuario.");
+            System.out.println("Contraseña incorrecta. Intenta de nuevo.");
         }
+
     }
 
     public void register() {
         // Cargar usuarios existentes como un HashMap
-        HashMap<String, User> usuariosExistentes = FileHandler.loadUsers();
+        HashMap<String, User> userHashMap = userService.findAll();
 
         System.out.print("Ingrese su nombre completo: ");
         String nombreCompleto = scanner.nextLine();
 
-        System.out.print("Ingrese un nombre de usuario: ");
-        String nombreUsuario = scanner.nextLine();
+        String nombreUsuario;
+        while (true) {
+            System.out.print("Ingrese un nombre de usuario: ");
+            nombreUsuario = scanner.nextLine();
 
-        // Verificar si el nombre de usuario ya existe
-        if (usuariosExistentes.containsKey(nombreUsuario)) {
-            System.out.println("El nombre de usuario ya está en uso. Por favor, elija otro.");
-            return;
+            // Verificar si el nombre de usuario ya existe
+            if (userHashMap.containsKey(nombreUsuario)) {
+                System.out.println("El nombre de usuario ya está en uso. Por favor, elija otro.");
+            } else {
+                break; // Nombre de usuario válido
+            }
         }
 
         System.out.print("Ingrese su rol (por ejemplo, Ingeniero, Albañil): ");
@@ -162,39 +169,75 @@ public class SafetyGuideController {
         System.out.print("Ingrese su información de contacto (email o teléfono): ");
         String contacto = scanner.nextLine();
 
-        System.out.print("Ingrese una contraseña: ");
-        String contrasena = scanner.nextLine();
+        String contrasena;
+        String confirmarContrasena;
+        while (true) {
+            System.out.print("Ingrese una contraseña: ");
+            contrasena = scanner.nextLine();
 
-        System.out.print("Confirme su contraseña: ");
-        String confirmarContrasena = scanner.nextLine();
+            System.out.print("Confirme su contraseña: ");
+            confirmarContrasena = scanner.nextLine();
 
-        if (contrasena.equals(confirmarContrasena)) {
-            // Crear un nuevo usuario
-            User nuevoUsuario = new User(nombreCompleto, nombreUsuario, rol, compania, contacto, contrasena);
-
-            // Agregar el nuevo usuario al HashMap
-            usuariosExistentes.put(nombreUsuario, nuevoUsuario);
-
-            // Guardar el HashMap actualizado en el archivo
-            FileHandler.saveUsers(usuariosExistentes);
-
-            System.out.println("Registro exitoso. Bienvenido, " + nuevoUsuario.getName());
-            System.out.println("Tu ID de usuario es: " + nuevoUsuario.getId());
-        } else {
-            System.out.println("Las contraseñas no coinciden. Por favor, intente nuevamente.");
+            if (contrasena.equals(confirmarContrasena)) {
+                break; // Contraseña válida
+            } else {
+                System.out.println("Las contraseñas no coinciden. Por favor, intente nuevamente.");
+            }
         }
+
+        // Crear un nuevo usuario
+        User nuevoUsuario = new User(nombreCompleto, nombreUsuario, rol, compania, contacto, contrasena);
+
+        // Agregar el nuevo usuario al HashMap
+        userService.save(nuevoUsuario);
+        guideService.createArrayForUser(nuevoUsuario.getUsername());
+
+        System.out.println("Registro exitoso. Bienvenido, " + nuevoUsuario.getName());
     }
 
     public void forgotPassword() {
+        User user;
+        System.out.print("Ingrese su nombre de usuario: ");
+        String currentUsername = scanner.nextLine();
+
+        Optional<User> optionalUser = userService.findById(currentUsername);
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        }
+        else {
+            System.out.println("Usuario no encontrado.");
+            return;
+        }
+
         System.out.print("Ingrese su correo electrónico: ");
         String correo = scanner.nextLine();
-        System.out.println("Se ha enviado un enlace para restablecer su contraseña al correo: " + correo);
+        servicioCorreos.notificarRestablecimientoContrasena(correo);
+        System.out.println("Se ha enviado un aviso sobre el cambio al correo: " + correo);
+
+        String contrasena;
+        String confirmarContrasena;
+        while (true) {
+            System.out.print("Ingrese su nueva contraseña: ");
+            contrasena = scanner.nextLine();
+
+            System.out.print("Confirme su contraseña: ");
+            confirmarContrasena = scanner.nextLine();
+
+            if (contrasena.equals(confirmarContrasena)) {
+                break; // Contraseña válida
+            } else {
+                System.out.println("Las contraseñas no coinciden. Por favor, intente nuevamente.");
+            }
+        }
+        user.setPassword(contrasena);
+        System.out.println("Contraseña cambiada de manera exitosa!.");
     }
 
     public void forgotUser() {
         System.out.print("Ingrese su correo electrónico: ");
         String correo = scanner.nextLine();
-        System.out.println("Se ha enviado su nombre de usuario al correo: " + correo);
+        servicioCorreos.notificarOlvidoUsuario(correo);
+        System.out.println("Se ha enviado información sobre la recuperación de usuario al correo: " + correo);
     }
 
     public void ofreceTuFeedback() {
@@ -271,7 +314,7 @@ public class SafetyGuideController {
         guiaBasica.generarChecklist();
         guiaBasica.mostrarRiesgosYPrevenciones();
         guiaBasica.interactuarChecklist(scanner);
-        service.save(currentUser.getUsername(), guiaBasica);
+        guideService.save(currentUser.getUsername(), guiaBasica);
     }
 
     public void createCustomGuide() {
@@ -301,7 +344,7 @@ public class SafetyGuideController {
     }
 
     private ArrayList<SafetyGuide> obtenerGuiasDelUsuario() {
-        return service.findById(currentUser.getUsername());
+        return guideService.findById(currentUser.getUsername());
     }
 
     private void mostrarGuias(ArrayList<SafetyGuide> guideArrayList) {
@@ -310,7 +353,6 @@ public class SafetyGuideController {
         for (SafetyGuide guide : guideArrayList) {
             System.out.println("\nGuía (" + i + ")");
             System.out.println("ID: " + guide.getId());
-            System.out.println("Usuario: " + guide.getUser().getName());
             System.out.println("Fecha de creación: " + guide.getCreationDate());
             i++;
         }
@@ -380,7 +422,7 @@ public class SafetyGuideController {
     }
 
     private void viewExistingGuides() {
-        ArrayList<ArrayList<SafetyGuide>> guides = service.getAllGuides();
+        ArrayList<ArrayList<SafetyGuide>> guides = guideService.getAllGuides();
 
         System.out.println("\n=== Guías Existentes ===");
         for (ArrayList<SafetyGuide> guideArrayList : guides) {
@@ -397,7 +439,7 @@ public class SafetyGuideController {
         String outputPath = scanner.nextLine();
 
         try {
-            service.generatePDF(guideId, outputPath);
+            guideService.generatePDF(guideId, outputPath);
             System.out.println("PDF generado exitosamente en: " + outputPath);
         } catch (IOException e) {
             System.out.println("Error al generar el PDF: " + e.getMessage());

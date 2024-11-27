@@ -1,6 +1,8 @@
 package models.general;
 
 import control.SafetyGuideController;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public abstract class SafetyGuide {
+public abstract class SafetyGuide implements Serializable {
+    private static final long serialVersionUID = 1L; // Versión para evitar problemas de compatibilidad
+
     // Atributos de la primera clase
     private String id;
     private User user;

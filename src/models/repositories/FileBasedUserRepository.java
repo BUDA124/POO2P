@@ -4,7 +4,7 @@ import models.general.User;
 import models.utils.FileHandler;
 import java.util.*;
 
-public class FileBasedUserRepository implements Repository<User> {
+public class FileBasedUserRepository {
     private HashMap<String, User> users;
 
     public FileBasedUserRepository() {
@@ -20,36 +20,21 @@ public class FileBasedUserRepository implements Repository<User> {
         FileHandler.saveUsers(users);
     }
 
-    public User save(String username, User user) {
-        users.put(user.getId(), user);
+    public void save(String username, User user) {
+        users.put(user.getUsername(), user);
         saveUsers();
-        return user;
     }
 
-    @Override
-    public Optional<User> findById(String username) {
+    public Optional<User> findByUsername(String username) {
         return Optional.ofNullable(users.get(username));
     }
 
-    @Override
-    public ArrayList<User> findAll() {
-        return new ArrayList<>(users.values());
-    }
-
-    @Override
     public void delete(String id) {
         users.remove(id);
         saveUsers();
     }
 
-    public Optional<User> findByUsername(String username) {
-        return users.values().stream()
-            .filter(user -> user.getUsername().equals(username))
-            .findFirst();
-    }
-
-    public boolean existsByUsername(String username) {
-        return users.values().stream()
-            .anyMatch(user -> user.getUsername().equals(username));
+    public HashMap<String, User> getUsers() {
+        return users;
     }
 }
