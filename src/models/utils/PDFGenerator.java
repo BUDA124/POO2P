@@ -113,7 +113,8 @@ public class PDFGenerator {
 
     private void addHeader(Document document, SafetyGuide guide) {
         float titleSize = 24f;
-        Paragraph title = new Paragraph("Guía de Seguridad")
+        String tempTitle = guide.getTitle();
+        Paragraph title = new Paragraph(tempTitle)
                 .setFont(titleFont)
                 .setFontSize(titleSize)
                 .setTextAlignment(TextAlignment.CENTER)

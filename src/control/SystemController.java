@@ -388,13 +388,13 @@ public class SystemController {
             int opcion = getIntInput(scanner);
             switch (opcion) {
                 case 1:
-                    descargarGuia(guide);
+                    downloadGuide(guide);
                     break;
                 case 2:
-                    eliminarGuia(guide);
+                    deleteGuide(guide);
                     return;
                 case 3:
-                    editarGuia(guide);
+                    editGuide(guide);
                     return;
                 case 4:
                     return;
@@ -404,7 +404,7 @@ public class SystemController {
         }
     }
 
-    private void descargarGuia(SafetyGuide guide) {
+    private void downloadGuide(SafetyGuide guide) {
         System.out.println("Descargando guía con ID: " + guide.getId());
         try {
             pdfGenerator.generatePDF(currentUser, guide);
@@ -413,13 +413,13 @@ public class SystemController {
         }
     }
 
-    private void eliminarGuia(SafetyGuide guide) {
+    private void deleteGuide(SafetyGuide guide) {
         System.out.println("Eliminando guía seleccionada: " + guide.getId());
         guideService.delete(currentUser.getUsername(), guide);
         System.out.println("Guía eliminada con éxito.");
     }
 
-    private void editarGuia(SafetyGuide guide) {
+    private void editGuide(SafetyGuide guide) {
         guideService.delete(currentUser.getUsername(), guide);
         createCustomGuide();
     }

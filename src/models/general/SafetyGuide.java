@@ -11,7 +11,7 @@ public abstract class SafetyGuide implements Serializable {
 
     // Atributos de la primera clase
     private String id;
-    private User user;
+    private String title = "Guía básica de seguridad";
     private LocalDateTime creationDate;
 
     // Atributos de la segunda clase
@@ -65,7 +65,8 @@ public abstract class SafetyGuide implements Serializable {
 
     // Getters y setters
     public String getId() { return id; }
-    public User getUser() { return user; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
     public LocalDateTime getCreationDate() { return creationDate; }
     public List<String> getRisks() {
         return new ArrayList<String>(riesgosYPrevenciones.keySet());

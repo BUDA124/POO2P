@@ -20,6 +20,7 @@ public class CustomSafetyGuide extends SafetyGuide implements Serializable {
     private transient Scanner scanner = new Scanner(System.in);
 
     public CustomSafetyGuide() {
+        this.defineProjectTitle();
         this.seleccionarAreasDeTrabajo();
         this.seleccionarProfesionales();
         this.seleccionarHerramientas();
@@ -31,6 +32,11 @@ public class CustomSafetyGuide extends SafetyGuide implements Serializable {
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
+    }
+
+    private void defineProjectTitle() {
+        System.out.print("\nDefina un título para su proyecto: ");
+        super.setTitle(scanner.nextLine());
     }
 
     private void mostrarAreasTrabajo() {
