@@ -45,15 +45,6 @@ public abstract class SafetyGuide implements Serializable {
         }
     }
 
-    public void marcarPrevencionCumplida(int indice) {
-        if (indice > 0 && indice <= checklist.size()) {
-            String prevencion = checklist.get(indice - 1);
-            System.out.println("Prevención marcada como cumplida: " + prevencion);
-        } else {
-            System.out.println("Índice inválido.");
-        }
-    }
-
     public void interactuarChecklist(Scanner scanner) {
         while (true) {
             mostrarChecklist();

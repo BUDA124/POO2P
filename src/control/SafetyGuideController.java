@@ -1,14 +1,18 @@
 package control;
 
-import com.itextpdf.io.IOException;
-import models.general.*;
+import models.general.BasicSafetyGuide;
+import models.general.CustomSafetyGuide;
+import models.general.SafetyGuide;
+import models.general.User;
 import models.services.SafetyGuideService;
 import models.services.ServicioCorreos;
 import models.services.UserService;
-import models.utils.FileHandler;
 import models.utils.PDFGenerator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.Scanner;
 
 public class SafetyGuideController {
     private final SafetyGuideService guideService;
@@ -23,7 +27,7 @@ public class SafetyGuideController {
         this.guideService = guideService;
         this.userService = userService;
         this.servicioCorreos = servicioCorreos;
-        this.pdfGenerator = new PDFGenerator();
+        this.pdfGenerator = pdfGenerator;
         this.scanner = new Scanner(System.in);
 
     }
@@ -420,32 +424,5 @@ public class SafetyGuideController {
     private void editarGuia(SafetyGuide guide) {
         System.out.println("Editando guía con ID: " + guide.getId());
         // Lógica para editar la guía
-    }
-
-    private void viewExistingGuides() {
-        ArrayList<ArrayList<SafetyGuide>> guides = guideService.getAllGuides();
-
-        System.out.println("\n=== Guías Existentes ===");
-        for (ArrayList<SafetyGuide> guideArrayList : guides) {
-            for (SafetyGuide guide : guideArrayList) {
-                System.out.println("\nID: " + guide.getId());
-                System.out.println("Usuario: " + guide.getUser().getName());
-                System.out.println("Fecha de creación: " + guide.getCreationDate());
-            }
-        }
-    }
-
-    private void generatePDF(String guideId) {
-        System.out.print("Ingrese la ruta de salida para el PDF: ");
-        String outputPath = scanner.nextLine();
-
-        try {
-            guideService.generatePDF(guideId, outputPath);
-            System.out.println("PDF generado exitosamente en: " + outputPath);
-        } catch (IOException e) {
-            System.out.println("Error al generar el PDF: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }
