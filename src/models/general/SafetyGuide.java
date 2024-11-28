@@ -62,7 +62,7 @@ public abstract class SafetyGuide implements Serializable {
         while (true) {
             mostrarChecklist();
 
-            System.out.println("Digite las prevenciones cumplidas (0 para salir):");
+            System.out.print("Digite las prevenciones cumplidas (0 para salir): ");
             int opcion = SafetyGuideController.getIntInput(scanner);
 
             if (opcion == 0) {
@@ -70,7 +70,6 @@ public abstract class SafetyGuide implements Serializable {
             } else if (opcion > 0 && opcion <= checklist.size()) {
                 String prevencion = checklist.get(opcion - 1);
                 checklist.set(opcion - 1, prevencion + " (Cumplida)");
-                System.out.println("Prevención marcada como cumplida: " + prevencion);
             } else {
                 System.out.println("Opción inválida. Intente de nuevo.");
             }

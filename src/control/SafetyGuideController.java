@@ -297,11 +297,9 @@ public class SafetyGuideController {
                     createBasicGuide();
                     break;
                 case 2:
-                    System.out.println("Personalizando guía de seguridad...");
                     createCustomGuide();
                     break;
                 case 3:
-                    System.out.println("Regresando al menú principal...");
                     return;
                 default:
                     System.out.println("Opción inválida. Por favor, intente nuevamente.");
@@ -318,10 +316,10 @@ public class SafetyGuideController {
     }
 
     public void createCustomGuide() {
-        CustomSafetyGuide guiaPersonalizada = new CustomSafetyGuide(scanner);
+        CustomSafetyGuide guiaPersonalizada = new CustomSafetyGuide();
         guiaPersonalizada.mostrarRiesgosYPrevenciones();
-        guiaPersonalizada.mostrarChecklist();
         guiaPersonalizada.interactuarChecklist(scanner);
+        guideService.save(currentUser.getUsername(), guiaPersonalizada);
     }
 
     public void accederAGuiasGuardadas() {
@@ -330,15 +328,12 @@ public class SafetyGuideController {
             System.out.println("No tienes guías guardadas.");
             return;
         }
-
-        mostrarGuias(guideArrayList);
-
         while (true) {
+            mostrarGuias(guideArrayList);
             SafetyGuide selectedGuide = seleccionarGuia(guideArrayList);
             if (selectedGuide == null) {
                 return; // Salir si el usuario decide cancelar
             }
-
             mostrarOpcionesDeGuia(selectedGuide);
         }
     }
@@ -359,19 +354,17 @@ public class SafetyGuideController {
     }
 
     private SafetyGuide seleccionarGuia(ArrayList<SafetyGuide> guideArrayList) {
-        System.out.println("\nSelecciona una guía para continuar o ingresa 0 para salir:");
+        System.out.print("\nSelecciona una guía para continuar o ingresa 0 para salir: ");
         int selectedGuide = getIntInput(scanner);
 
         // Manejar la opción de salir
         if (selectedGuide == 0) {
             return null; // O manejar el caso según sea necesario
         }
-
         // Verificar si la selección es válida
         if (selectedGuide > 0 && selectedGuide <= guideArrayList.size()) {
             return guideArrayList.get(selectedGuide - 1); // Ajustar para índice basado en 0
         }
-
         System.out.println("Número de guía inválido. Por favor intenta nuevamente.");
         return seleccionarGuia(guideArrayList); // Llama recursivamente hasta obtener una selección válida
     }

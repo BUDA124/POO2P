@@ -5,26 +5,36 @@
 
 package models.general;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class CustomSafetyGuide extends SafetyGuide {
+public class CustomSafetyGuide extends SafetyGuide implements Serializable {
+    private static final long serialVersionUID = 1L; // Versión para evitar problemas de compatibilidad
+
     private List<String> areasDeTrabajo = new ArrayList();
     private List<String> profesionales = new ArrayList();
     private List<String> herramientas = new ArrayList();
+    private transient Scanner scanner = new Scanner(System.in);
 
-    public CustomSafetyGuide(Scanner scanner) {
-        this.seleccionarAreasDeTrabajo(scanner);
-        this.seleccionarProfesionales(scanner);
-        this.seleccionarHerramientas(scanner);
+    public CustomSafetyGuide() {
+        this.seleccionarAreasDeTrabajo();
+        this.seleccionarProfesionales();
+        this.seleccionarHerramientas();
         this.generarRiesgosPersonalizados();
         this.generarChecklist();
     }
 
-    private void seleccionarAreasDeTrabajo(Scanner scanner) {
-        System.out.println("Seleccione las áreas de trabajo (ingrese los números separados por comas):");
+    private void inicializarScanner() {
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
+    }
+
+    private void mostrarAreasTrabajo() {
+        System.out.println("\n=== Áreas de trabajo ===");
         System.out.println("1. Obra Civil");
         System.out.println("2. Edificación");
         System.out.println("3. Obra Residencial");
@@ -32,169 +42,208 @@ public class CustomSafetyGuide extends SafetyGuide {
         System.out.println("5. Obra Comercial");
         System.out.println("6. Construcciones Institucionales");
         System.out.println("7. Construcción Pública");
-        String input = scanner.nextLine();
-        String[] opciones = input.split(",");
-        String[] var4 = opciones;
-        int var5 = opciones.length;
+        System.out.print("Ingrese el número de la opción o '0' para finalizar: ");
+    }
+    private void seleccionarAreasDeTrabajo() {
+        inicializarScanner();
+        this.areasDeTrabajo.clear();
 
-        for(int var6 = 0; var6 < var5; ++var6) {
-            String opcion = var4[var6];
-            switch (opcion.trim()) {
+        while (true) {
+            mostrarAreasTrabajo();
+            String opcion = scanner.nextLine().trim();
+
+            switch (opcion) {
+                    case "0":
+                        if (this.areasDeTrabajo.isEmpty()) {
+                            System.out.println("Debe de elegir al menos un área de trabajo antes de finalizar.");
+                            break;
+                        } else {
+                            return;
+                        }
+                    case "1":
+                        this.areasDeTrabajo.add("Obra Civil");
+                        System.out.println("Agregado: Obra Civil");
+                        break;
+                    case "2":
+                        this.areasDeTrabajo.add("Edificación");
+                        System.out.println("Agregado: Edificación");
+                        break;
+                    case "3":
+                        this.areasDeTrabajo.add("Obra Residencial");
+                        System.out.println("Agregado: Obra Residencial");
+                        break;
+                    case "4":
+                        this.areasDeTrabajo.add("Obra Industrial");
+                        System.out.println("Agregado: Obra Industrial");
+                        break;
+                    case "5":
+                        this.areasDeTrabajo.add("Obra Comercial");
+                        System.out.println("Agregado: Obra Comercial");
+                        break;
+                    case "6":
+                        this.areasDeTrabajo.add("Construcciones Institucionales");
+                        System.out.println("Agregado: Construcciones Institucionales");
+                        break;
+                    case "7":
+                        this.areasDeTrabajo.add("Construcción Pública");
+                        System.out.println("Agregado: Construcción Pública");
+                        break;
+                    default:
+                        System.out.println("Opción inválida. Por favor, intente de nuevo.");
+                }
+        }
+    }
+
+    private void mostrarProfesionales() {
+        System.out.println("\n=== Profesionales ===");
+        System.out.println("1. Albañil");
+        System.out.println("2. Peones de Construcción de Edificios");
+        System.out.println("3. Electricistas de la Construcción y Afines");
+        System.out.println("4. Pintores y Empapeladores");
+        System.out.println("5. Encofradores y Operarios de Hormigón");
+        System.out.println("6. Oficiales, Operarios y Artesanos de Otros Oficios");
+        System.out.println("7. Montadores de Estructuras Metálicas");
+        System.out.print("Ingrese el número de la opción o '0' para finalizar: ");
+    }
+
+    private void seleccionarProfesionales() {
+        inicializarScanner();
+        this.profesionales.clear();
+
+        while (true) {
+            mostrarProfesionales();
+            String opcion = scanner.nextLine().trim();
+
+            switch (opcion) {
+                case "0":
+                    if (this.profesionales.isEmpty()) {
+                        System.out.println("Debe seleccionar al menos un profesional antes de finalizar.");
+                        break;
+                    } else {
+                        return;
+                    }
                 case "1":
-                    this.areasDeTrabajo.add("Obra Civil");
+                    this.profesionales.add("Albañil");
+                    System.out.println("Agregado: Albañil");
                     break;
                 case "2":
-                    this.areasDeTrabajo.add("Edificación");
+                    this.profesionales.add("Peones de Construcción de Edificios");
+                    System.out.println("Agregado: Peones de Construcción de Edificios");
                     break;
                 case "3":
-                    this.areasDeTrabajo.add("Obra Residencial");
+                    this.profesionales.add("Electricistas de la Construcción y Afines");
+                    System.out.println("Agregado: Electricistas de la Construcción y Afines");
                     break;
                 case "4":
-                    this.areasDeTrabajo.add("Obra Industrial");
+                    this.profesionales.add("Pintores y Empapeladores");
+                    System.out.println("Agregado: Pintores y Empapeladores");
                     break;
                 case "5":
-                    this.areasDeTrabajo.add("Obra Comercial");
+                    this.profesionales.add("Encofradores y Operarios de Hormigón");
+                    System.out.println("Agregado: Encofradores y Operarios de Hormigón");
                     break;
                 case "6":
-                    this.areasDeTrabajo.add("Construcciones Institucionales");
+                    this.profesionales.add("Oficiales, Operarios y Artesanos de Otros Oficios");
+                    System.out.println("Agregado: Oficiales, Operarios y Artesanos de Otros Oficios");
                     break;
                 case "7":
-                    this.areasDeTrabajo.add("Construcción Pública");
+                    this.profesionales.add("Montadores de Estructuras Metálicas");
+                    System.out.println("Agregado: Montadores de Estructuras Metálicas");
                     break;
                 default:
-                    System.out.println("Opción inválida: " + opcion);
-            }
-        }
-
-    }
-
-    private void seleccionarProfesionales(Scanner scanner) {
-        boolean valido = false;
-
-        while(true) {
-            while(!valido) {
-                System.out.println("Seleccione entre 1 y 7 profesionales (ingrese los números separados por comas):");
-                System.out.println("1. Albañil");
-                System.out.println("2. Peones de Construcción de Edificios");
-                System.out.println("3. Electricistas de la Construcción y Afines");
-                System.out.println("4. Pintores y Empapeladores");
-                System.out.println("5. Encofradores y Operarios de Hormigón");
-                System.out.println("6. Oficiales, Operarios y Artesanos de Otros Oficios");
-                System.out.println("7. Montadores de Estructuras Metálicas");
-                String input = scanner.nextLine();
-                String[] opciones = input.split(",");
-                this.profesionales.clear();
-                String[] var5 = opciones;
-                int var6 = opciones.length;
-
-                for(int var7 = 0; var7 < var6; ++var7) {
-                    String opcion = var5[var7];
-                    switch (opcion.trim()) {
-                        case "1":
-                            this.profesionales.add("Albañil");
-                            break;
-                        case "2":
-                            this.profesionales.add("Peones de Construcción de Edificios");
-                            break;
-                        case "3":
-                            this.profesionales.add("Electricistas de la Construcción y Afines");
-                            break;
-                        case "4":
-                            this.profesionales.add("Pintores y Empapeladores");
-                            break;
-                        case "5":
-                            this.profesionales.add("Encofradores y Operarios de Hormigón");
-                            break;
-                        case "6":
-                            this.profesionales.add("Oficiales, Operarios y Artesanos de Otros Oficios");
-                            break;
-                        case "7":
-                            this.profesionales.add("Montadores de Estructuras Metálicas");
-                            break;
-                        default:
-                            System.out.println("Opción inválida: " + opcion.trim());
-                    }
-                }
-
-                if (this.profesionales.size() >= 1 && this.profesionales.size() <= 7) {
-                    valido = true;
-                } else {
-                    System.out.println("Debe seleccionar entre 1 y 7 profesionales. Intente nuevamente.");
-                }
+                    System.out.println("Opción inválida. Por favor, intente de nuevo.");
             }
 
-            return;
+            // Verificar si se seleccionó el máximo permitido.
+            if (this.profesionales.size() == 7) {
+                System.out.println("Se ha alcanzado el número máximo de profesionales seleccionados (7).");
+                break;
+            }
         }
     }
 
-    private void seleccionarHerramientas(Scanner scanner) {
-        boolean valido = false;
+    private void mostrarHerramientas() {
+        System.out.println("\n=== Herramientas ===");
+        System.out.println("1. Generador Eléctrico");
+        System.out.println("2. Hormigonera");
+        System.out.println("3. Placa Compactadora");
+        System.out.println("4. Carretilla Elevadora");
+        System.out.println("5. Pistola de Clavos");
+        System.out.println("6. Nivel y/o Destornillador");
+        System.out.println("7. Llaves, Pinzas y/o Remachadora");
+        System.out.println("8. Serrucho, Pala y/o Martillo");
+        System.out.println("9. Taladro y/o Amoladora");
+        System.out.print("Ingrese el número de la opción o '0' para finalizar: ");
+    }
 
-        while(true) {
-            while(!valido) {
-                System.out.println("Seleccione entre 1 y 9 herramientas (ingrese los números separados por comas):");
-                System.out.println("1. Generador Eléctrico");
-                System.out.println("2. Hormigonera");
-                System.out.println("3. Placa Compactadora");
-                System.out.println("4. Carretilla Elevadora");
-                System.out.println("5. Pistola de Clavos");
-                System.out.println("6. Nivel y/o Destornillador");
-                System.out.println("7. Llaves, Pinzas y/o Remachadora");
-                System.out.println("8. Serrucho, Pala y/o Martillo");
-                System.out.println("9. Taladro y/o Amoladora");
-                String input = scanner.nextLine();
-                String[] opciones = input.split(",");
-                this.herramientas.clear();
-                String[] var5 = opciones;
-                int var6 = opciones.length;
+    private void seleccionarHerramientas() {
+        inicializarScanner();
+        this.herramientas.clear();
 
-                for(int var7 = 0; var7 < var6; ++var7) {
-                    String opcion = var5[var7];
-                    switch (opcion.trim()) {
-                        case "1":
-                            this.herramientas.add("Generador Eléctrico");
-                            break;
-                        case "2":
-                            this.herramientas.add("Hormigonera");
-                            break;
-                        case "3":
-                            this.herramientas.add("Placa Compactadora");
-                            break;
-                        case "4":
-                            this.herramientas.add("Carretilla Elevadora");
-                            break;
-                        case "5":
-                            this.herramientas.add("Pistola de Clavos");
-                            break;
-                        case "6":
-                            this.herramientas.add("Nivel y/o Destornillador");
-                            break;
-                        case "7":
-                            this.herramientas.add("Llaves, Pinzas y/o Remachadora");
-                            break;
-                        case "8":
-                            this.herramientas.add("Serrucho, Pala y/o Martillo");
-                            break;
-                        case "9":
-                            this.herramientas.add("Taladro y/o Amoladora");
-                            break;
-                        default:
-                            System.out.println("Opción inválida: " + opcion.trim());
-                    }
-                }
+        while (true) {
+            mostrarHerramientas();
+            String opcion = scanner.nextLine().trim();
 
-                if (this.herramientas.size() >= 1 && this.herramientas.size() <= 9) {
-                    valido = true;
+            if (opcion.equals("0")) {
+                if (this.herramientas.isEmpty()) {
+                    System.out.println("Debe seleccionar al menos una herramienta antes de finalizar.");
                 } else {
-                    System.out.println("Debe seleccionar entre 1 y 9 herramientas. Intente nuevamente.");
+                    System.out.println("Selección finalizada.");
+                    break;
                 }
             }
 
-            return;
+            switch (opcion) {
+                case "1":
+                    this.herramientas.add("Generador Eléctrico");
+                    System.out.println("Agregado: Generador Eléctrico");
+                    break;
+                case "2":
+                    this.herramientas.add("Hormigonera");
+                    System.out.println("Agregado: Hormigonera");
+                    break;
+                case "3":
+                    this.herramientas.add("Placa Compactadora");
+                    System.out.println("Agregado: Placa Compactadora");
+                    break;
+                case "4":
+                    this.herramientas.add("Carretilla Elevadora");
+                    System.out.println("Agregado: Carretilla Elevadora");
+                    break;
+                case "5":
+                    this.herramientas.add("Pistola de Clavos");
+                    System.out.println("Agregado: Pistola de Clavos");
+                    break;
+                case "6":
+                    this.herramientas.add("Nivel y/o Destornillador");
+                    System.out.println("Agregado: Nivel y/o Destornillador");
+                    break;
+                case "7":
+                    this.herramientas.add("Llaves, Pinzas y/o Remachadora");
+                    System.out.println("Agregado: Llaves, Pinzas y/o Remachadora");
+                    break;
+                case "8":
+                    this.herramientas.add("Serrucho, Pala y/o Martillo");
+                    System.out.println("Agregado: Serrucho, Pala y/o Martillo");
+                    break;
+                case "9":
+                    this.herramientas.add("Taladro y/o Amoladora");
+                    System.out.println("Agregado: Taladro y/o Amoladora");
+                    break;
+                default:
+                    System.out.println("Opción inválida. Por favor, intente de nuevo.");
+            }
+
+            // Verificar si se alcanzó el máximo permitido.
+            if (this.herramientas.size() == 9) {
+                System.out.println("Se ha alcanzado el número máximo de herramientas seleccionadas (9).");
+                break;
+            }
         }
     }
 
     private void generarRiesgosPersonalizados() {
+        inicializarScanner();
         Iterator var1 = this.herramientas.iterator();
 
         String var2;
