@@ -1,6 +1,5 @@
 package view.controllers;
 
-import control.SafetyGuideController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -4,9 +4,9 @@ import java.util.Properties;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 
-public class ServicioCorreos {
+public class MailService {
 
-    public ServicioCorreos() {}
+    public MailService() {}
 
     private static final String USERNAME = "construccionguiasseguridad@gmail.com";
     private static final String APP_PASSWORD = "xmrnaxgpxzilhnlq";
@@ -79,17 +79,7 @@ public class ServicioCorreos {
         return String.format(template, saludo, cuerpo, detalles);
     }
 
-    // 1. Notificar un registro en el sistema
-    public void notificarRegistro(String destinatario, String nombreCliente) {
-        String saludo = "¡Bienvenido, " + nombreCliente + "!";
-        String cuerpo = "Gracias por registrarte en nuestro sistema. Tu cuenta ha sido activada exitosamente.";
-        String detalles = "Puedes acceder a nuestra plataforma en cualquier momento.";
-        String contenidoHTML = generarContenidoHTML(saludo, cuerpo, detalles);
-        enviarCorreo(destinatario, "Registro exitoso", contenidoHTML);
-    }
-
-    // 2. Notificar restablecimiento de contraseña
-    public void notificarRestablecimientoContrasena(String destinatario) {
+    public void notifyPasswordChange(String destinatario) {
         String saludo = "Notificación de restablecimiento de contraseña";
         String cuerpo = "Se ha solicitado un cambio de contraseña para tu cuenta.";
         String detalles = "Si no fuiste tú quien lo solicitó, comunícate con nosotros inmediatamente a " + USERNAME;
@@ -97,8 +87,7 @@ public class ServicioCorreos {
         enviarCorreo(destinatario, "Restablecimiento de contraseña", contenidoHTML);
     }
 
-    // 3. Notificar que no se puede recuperar el nombre de usuario
-    public void notificarOlvidoUsuario(String destinatario) {
+    public void notifyForgottenUsername(String destinatario) {
         String saludo = "Recuperación de nombre de usuario no disponible";
         String cuerpo = "Actualmente no ofrecemos el servicio para restablecer nombres de usuario.";
         String detalles = "Te recomendamos crear una nueva cuenta para acceder a nuestro servicio.";

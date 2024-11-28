@@ -5,7 +5,7 @@ import models.general.CustomSafetyGuide;
 import models.general.SafetyGuide;
 import models.general.User;
 import models.services.SafetyGuideService;
-import models.services.ServicioCorreos;
+import models.services.MailService;
 import models.services.UserService;
 import models.utils.PDFGenerator;
 
@@ -14,19 +14,19 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class SafetyGuideController {
+public class SystemController {
     private final SafetyGuideService guideService;
     private final UserService userService;
     private final Scanner scanner;
-    private final ServicioCorreos servicioCorreos;
+    private final MailService mailService;
     private final PDFGenerator pdfGenerator;
     private User currentUser;
 
-    public SafetyGuideController(SafetyGuideService guideService, UserService userService,
-                                 ServicioCorreos servicioCorreos, PDFGenerator pdfGenerator) {
+    public SystemController(SafetyGuideService guideService, UserService userService,
+                            MailService mailService, PDFGenerator pdfGenerator) {
         this.guideService = guideService;
         this.userService = userService;
-        this.servicioCorreos = servicioCorreos;
+        this.mailService = mailService;
         this.pdfGenerator = pdfGenerator;
         this.scanner = new Scanner(System.in);
 
@@ -71,7 +71,7 @@ public class SafetyGuideController {
         }
     }
 
-    public void menuOpcionesUsuario() {
+    public void userOptionsMenu() {
         while(true) {
             System.out.println("\n=== Menu de opciones de usuario ===");
             System.out.println("1. Crear guía de seguridad");
@@ -88,13 +88,13 @@ public class SafetyGuideController {
                     createNewGuide();
                     break;
                 case 2:
-                    accederAGuiasGuardadas();
+                    accessSavedGuides();
                     break;
                 case 3:
-                    conocerMasSobreRiesgos();
+                    moreAboutTools();
                     break;
                 case 4:
-                    ofreceTuFeedback();
+                    offerFeedback();
                     break;
                 case 5:
                     System.out.println("Sesión cerrada.");
@@ -140,7 +140,7 @@ public class SafetyGuideController {
         if (user.validatePassword(contrasena)) {
             System.out.println("Inicio de sesión exitoso. Bienvenido, " + user.getName());
             currentUser = user; // Asignar el usuario actual
-            menuOpcionesUsuario(); // Llamar al menú de opciones
+            userOptionsMenu(); // Llamar al menú de opciones
         } else {
             System.out.println("Contraseña incorrecta. Intenta de nuevo.");
         }
@@ -218,7 +218,7 @@ public class SafetyGuideController {
 
         System.out.print("Ingrese su correo electrónico: ");
         String correo = scanner.nextLine();
-        servicioCorreos.notificarRestablecimientoContrasena(correo);
+        mailService.notifyPasswordChange(correo);
         System.out.println("Se ha enviado un aviso sobre el cambio al correo: " + correo);
 
         String contrasena;
@@ -243,11 +243,11 @@ public class SafetyGuideController {
     public void forgotUser() {
         System.out.print("Ingrese su correo electrónico: ");
         String correo = scanner.nextLine();
-        servicioCorreos.notificarOlvidoUsuario(correo);
+        mailService.notifyForgottenUsername(correo);
         System.out.println("Se ha enviado información sobre la recuperación de usuario al correo: " + correo);
     }
 
-    public void ofreceTuFeedback() {
+    public void offerFeedback() {
         System.out.print("Asunto: ");
         String asunto = scanner.nextLine();
         System.out.print("Descripción: ");
@@ -255,7 +255,7 @@ public class SafetyGuideController {
         System.out.println("Sugerencia enviada con éxito.");
     }
 
-    public void conocerMasSobreRiesgos() {
+    public void moreAboutTools() {
         while(true) {
             System.out.println("\n=== Información ===");
             System.out.println("1. Conocer más sobre herramientas");
@@ -329,7 +329,7 @@ public class SafetyGuideController {
         guideService.save(currentUser.getUsername(), guiaPersonalizada);
     }
 
-    public void accederAGuiasGuardadas() {
+    public void accessSavedGuides() {
         ArrayList<SafetyGuide> guideArrayList = obtenerGuiasDelUsuario();
         if (guideArrayList == null || guideArrayList.isEmpty()) {
             System.out.println("No tienes guías guardadas.");
@@ -392,12 +392,12 @@ public class SafetyGuideController {
                     break;
                 case 2:
                     eliminarGuia(guide);
-                    return; // Salir al menú de selección después de eliminar
+                    return;
                 case 3:
                     editarGuia(guide);
-                    break;
+                    return;
                 case 4:
-                    return; // Regresar al menú de selección
+                    return;
                 default:
                     System.out.println("Opción inválida. Por favor intenta nuevamente.");
             }
@@ -415,14 +415,12 @@ public class SafetyGuideController {
 
     private void eliminarGuia(SafetyGuide guide) {
         System.out.println("Eliminando guía seleccionada: " + guide.getId());
-
-
-
+        guideService.delete(currentUser.getUsername(), guide);
         System.out.println("Guía eliminada con éxito.");
     }
 
     private void editarGuia(SafetyGuide guide) {
-        System.out.println("Editando guía con ID: " + guide.getId());
-        // Lógica para editar la guía
+        guideService.delete(currentUser.getUsername(), guide);
+        createCustomGuide();
     }
 }

@@ -246,8 +246,6 @@ public class CustomSafetyGuide extends SafetyGuide implements Serializable {
         inicializarScanner();
         Iterator var1 = this.herramientas.iterator();
 
-        String var2;
-        byte var4;
         while(var1.hasNext()) {
             switch ((String)var1.next()) {
                 case "Generador Eléctrico":

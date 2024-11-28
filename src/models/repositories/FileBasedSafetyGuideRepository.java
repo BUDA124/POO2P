@@ -39,8 +39,10 @@ public class FileBasedSafetyGuideRepository {
         return (ArrayList<ArrayList<SafetyGuide>>) guides.values();
     }
 
-    public void delete(String username) {
-        guides.remove(username);
+    public void delete(String username, SafetyGuide guide) {
+        ArrayList<SafetyGuide> userGuides = guides.get(username);
+        if (userGuides != null)
+            userGuides.removeIf(currentGuide -> currentGuide.equals(guide));
         saveGuides();
     }
 }

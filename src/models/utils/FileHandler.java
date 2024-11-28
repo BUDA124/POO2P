@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class FileHandler {
 
-    private static final String GUIDES_FILE_PATH = "src/DataFiles/safetyGuides.dat";
-    private static final String USERS_FILE_PATH = "src/DataFiles/users.dat";
+    private static final String GUIDES_FILE_PATH = "src/dataFiles/safetyGuides.dat";
+    private static final String USERS_FILE_PATH = "src/dataFiles/users.dat";
 
     /**
      * Guarda un mapa de guías de seguridad en un archivo.

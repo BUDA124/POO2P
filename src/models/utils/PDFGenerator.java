@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 
 public class PDFGenerator {
-    private static final String FONTS_PATH = "src/main/resources/fonts/";
+    private static final String FONTS_PATH = "src/models/utils/fonts/";
 
     // Estilos personalizables
     private PdfFont titleFont;

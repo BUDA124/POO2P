@@ -1,6 +1,6 @@
 package models.general;
 
-import control.SafetyGuideController;
+import control.SystemController;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -50,7 +50,7 @@ public abstract class SafetyGuide implements Serializable {
             mostrarChecklist();
 
             System.out.print("Digite las prevenciones cumplidas (0 para salir): ");
-            int opcion = SafetyGuideController.getIntInput(scanner);
+            int opcion = SystemController.getIntInput(scanner);
 
             if (opcion == 0) {
                 break;
