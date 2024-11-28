@@ -6,6 +6,7 @@ import models.services.SafetyGuideService;
 import models.services.ServicioCorreos;
 import models.services.UserService;
 import models.utils.FileHandler;
+import models.utils.PDFGenerator;
 
 import java.util.*;
 
@@ -14,12 +15,15 @@ public class SafetyGuideController {
     private final UserService userService;
     private final Scanner scanner;
     private final ServicioCorreos servicioCorreos;
+    private final PDFGenerator pdfGenerator;
     private User currentUser;
 
-    public SafetyGuideController(SafetyGuideService guideService, UserService userService, ServicioCorreos servicioCorreos) {
+    public SafetyGuideController(SafetyGuideService guideService, UserService userService,
+                                 ServicioCorreos servicioCorreos, PDFGenerator pdfGenerator) {
         this.guideService = guideService;
         this.userService = userService;
         this.servicioCorreos = servicioCorreos;
+        this.pdfGenerator = new PDFGenerator();
         this.scanner = new Scanner(System.in);
 
     }
@@ -132,7 +136,6 @@ public class SafetyGuideController {
         if (user.validatePassword(contrasena)) {
             System.out.println("Inicio de sesión exitoso. Bienvenido, " + user.getName());
             currentUser = user; // Asignar el usuario actual
-            guideService.setCurrentUser(currentUser);
             menuOpcionesUsuario(); // Llamar al menú de opciones
         } else {
             System.out.println("Contraseña incorrecta. Intenta de nuevo.");
@@ -399,13 +402,18 @@ public class SafetyGuideController {
 
     private void descargarGuia(SafetyGuide guide) {
         System.out.println("Descargando guía con ID: " + guide.getId());
-        // generatePDF();
+        try {
+            pdfGenerator.generatePDF(currentUser, guide);
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void eliminarGuia(SafetyGuide guide) {
         System.out.println("Eliminando guía seleccionada: " + guide.getId());
-        // Lógica para eliminar la guía
-        // service.deleteGuideById(guide.getId());
+
+
+
         System.out.println("Guía eliminada con éxito.");
     }
 

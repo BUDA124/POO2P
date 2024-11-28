@@ -1,18 +1,20 @@
 package models.utils;
 
-import com.itextpdf.layout.property.TextAlignment;
-import models.general.*;
-import com.itextpdf.kernel.pdf.*;
-import com.itextpdf.kernel.colors.ColorConstants;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.*;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
+import models.general.BasicSafetyGuide;
+import models.general.CustomSafetyGuide;
+import models.general.SafetyGuide;
+import models.general.User;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class PDFGenerator {
     private static final String FONTS_PATH = "src/main/resources/fonts/";
@@ -21,14 +23,12 @@ public class PDFGenerator {
     private PdfFont titleFont;
     private PdfFont headerFont;
     private PdfFont normalFont;
-    private float titleSize = 24f;
-    private float headerSize = 16f;
-    private float normalSize = 12f;
-    private float spacing = 20f;
+    private final float headerSize = 16f;
+    private final float normalSize = 12f;
+    private final float spacing = 20f;
 
     public PDFGenerator() {
         try {
-            // Puedes cambiar las fuentes según tus preferencias
             titleFont = PdfFontFactory.createFont(FONTS_PATH + "Roboto-Bold.ttf");
             headerFont = PdfFontFactory.createFont(FONTS_PATH + "Roboto-Medium.ttf");
             normalFont = PdfFontFactory.createFont(FONTS_PATH + "Roboto-Regular.ttf");
@@ -37,43 +37,82 @@ public class PDFGenerator {
         }
     }
 
-    // Métodos para personalizar estilos
-    public void setTitleFont(String fontPath) throws IOException {
-        this.titleFont = PdfFontFactory.createFont(FONTS_PATH + fontPath);
-    }
+    public void generatePDF(User user, SafetyGuide guide) throws IOException {
+        // Obtener la ruta de la carpeta de descargas
+        String downloadsFolder = getDownloadsFolder();
+        if (downloadsFolder == null) {
+            throw new IOException("No se pudo determinar la carpeta de descargas.");
+        }
 
-    public void setHeaderFont(String fontPath) throws IOException {
-        this.headerFont = PdfFontFactory.createFont(FONTS_PATH + fontPath);
-    }
+        // Definir el nombre del archivo
+        String fileName = "Guia_Seguridad_" + guide.getId() + ".pdf";
+        String outputPath = Paths.get(downloadsFolder, fileName).toString();
 
-    public void setNormalFont(String fontPath) throws IOException {
-        this.normalFont = PdfFontFactory.createFont(FONTS_PATH + fontPath);
-    }
-
-    public void setFontSizes(float titleSize, float headerSize, float normalSize) {
-        this.titleSize = titleSize;
-        this.headerSize = headerSize;
-        this.normalSize = normalSize;
-    }
-
-    public void setSpacing(float spacing) {
-        this.spacing = spacing;
-    }
-
-    public void generatePDF(SafetyGuide guide, String outputPath) throws IOException {
+        // Crear el archivo PDF
         PdfWriter writer = new PdfWriter(outputPath);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf, PageSize.A4);
         document.setMargins(36, 36, 36, 36);
 
+        // Generar contenido del PDF
         addHeader(document, guide);
-        addUserInformation(document, guide.getUser());
+        addUserInformation(document, user);
+        addGuideDetails(document, guide); // Nueva sección
         addFooter(document, guide);
 
         document.close();
+
+        System.out.println("PDF generado exitosamente en: " + outputPath);
     }
 
+    private void addGuideDetails(Document document, SafetyGuide guide) {
+        // Título de la sección
+        document.add(new Paragraph("Detalles de la Guía de Seguridad")
+                .setFont(headerFont)
+                .setFontSize(headerSize)
+                .setBold());
+        document.add(new Paragraph().setHeight(spacing / 2));
+
+        if (guide instanceof BasicSafetyGuide basicGuide) {
+
+            document.add(new Paragraph("Riesgos generales:")
+                    .setFont(headerFont)
+                    .setFontSize(headerSize));
+            basicGuide.getRisks().forEach(risk ->
+                    document.add(new Paragraph("- " + risk).setFont(normalFont).setFontSize(normalSize))
+            );
+
+            document.add(new Paragraph("Prevenciones generales:")
+                    .setFont(headerFont)
+                    .setFontSize(headerSize));
+            basicGuide.getPreventions().forEach(prevention ->
+                    document.add(new Paragraph("- " + prevention).setFont(normalFont).setFontSize(normalSize))
+            );
+
+        } else if (guide instanceof CustomSafetyGuide customGuide) {
+
+            document.add(new Paragraph("Riesgos personalizados:")
+                    .setFont(headerFont)
+                    .setFontSize(headerSize));
+            customGuide.getRisks().forEach(customRisk ->
+                    document.add(new Paragraph("- " + customRisk).setFont(normalFont).setFontSize(normalSize))
+            );
+
+            document.add(new Paragraph("Prevenciones específicas:")
+                    .setFont(headerFont)
+                    .setFontSize(headerSize));
+            customGuide.getPreventions().forEach(customPrevention ->
+                    document.add(new Paragraph("- " + customPrevention).setFont(normalFont).setFontSize(normalSize))
+            );
+        }
+
+        document.add(new Paragraph().setHeight(spacing));
+    }
+
+
+
     private void addHeader(Document document, SafetyGuide guide) {
+        float titleSize = 24f;
         Paragraph title = new Paragraph("Guía de Seguridad")
                 .setFont(titleFont)
                 .setFontSize(titleSize)
@@ -92,94 +131,36 @@ public class PDFGenerator {
     }
 
     private void addUserInformation(Document document, User user) {
-        Table userTable = new Table(2).useAllAvailableWidth();
-
-        // Estilo para la tabla
-        userTable.setBorder(new SolidBorder(ColorConstants.GRAY, 1));
-        userTable.setBackgroundColor(ColorConstants.LIGHT_GRAY, 0.2f);
-
-        // Título de la sección
-        Cell titleCell = new Cell(1, 2)
-                .add(new Paragraph("Información del Usuario")
-                        .setFont(headerFont)
-                        .setFontSize(headerSize))
-                .setBorder(new SolidBorder(ColorConstants.GRAY, 1));
-        userTable.addCell(titleCell);
-
-        // Datos del usuario
-        addTableRow(userTable, "Nombre:", user.getName());
-        addTableRow(userTable, "Rol:", user.getRole());
-        addTableRow(userTable, "Empresa:", user.getCompany());
-        addTableRow(userTable, "Contacto:", user.getContactInfo());
-
-        document.add(userTable);
-        document.add(new Paragraph().setHeight(spacing));
-    }
-
-    private void addChecklist(Document document, List<SafetyRequirement> checklist) {
-        document.add(new Paragraph("Lista de Comprobación")
+        document.add(new Paragraph("Información del Usuario")
                 .setFont(headerFont)
                 .setFontSize(headerSize));
-
-        Table checklistTable = new Table(new float[]{20f, 60f, 20f}).useAllAvailableWidth();
-
-        // Encabezados
-        addTableHeaderCell(checklistTable, "No.");
-        addTableHeaderCell(checklistTable, "Requerimiento");
-        addTableHeaderCell(checklistTable, "Estado");
-
-        // Items
-        for (int i = 0; i < checklist.size(); i++) {
-            SafetyRequirement req = checklist.get(i);
-            addTableCell(checklistTable, String.valueOf(i + 1));
-            addTableCell(checklistTable, req.getDescription() +
-                    (req.isRequired() ? " *" : ""));
-            addTableCell(checklistTable, req.isCompleted() ? "✓" : "□");
-        }
-
-        document.add(checklistTable);
+        document.add(new Paragraph("Nombre: " + user.getName()).setFont(normalFont).setFontSize(normalSize));
+        document.add(new Paragraph("Rol: " + user.getRole()).setFont(normalFont).setFontSize(normalSize));
+        document.add(new Paragraph("Empresa: " + user.getCompany()).setFont(normalFont).setFontSize(normalSize));
+        document.add(new Paragraph("Contacto: " + user.getContactInfo()).setFont(normalFont).setFontSize(normalSize));
         document.add(new Paragraph().setHeight(spacing));
-    }
-
-    private void addFeedbackSection(Document document, List<String> feedback) {
-        if (!feedback.isEmpty()) {
-            document.add(new Paragraph("Retroalimentación")
-                    .setFont(headerFont)
-                    .setFontSize(headerSize));
-
-            Table feedbackTable = new Table(1).useAllAvailableWidth();
-            feedback.forEach(f -> addTableCell(feedbackTable, "• " + f));
-            document.add(feedbackTable);
-        }
     }
 
     private void addFooter(Document document, SafetyGuide guide) {
         document.add(new Paragraph()
-                .add(new Text("ID de la guía: " + guide.getId())
-                        .setFont(normalFont)
-                        .setFontSize(10f))
+                .add("ID de la guía: " + guide.getId())
+                .setFont(normalFont)
+                .setFontSize(10f)
                 .setTextAlignment(TextAlignment.RIGHT));
     }
 
-    // Métodos auxiliares para crear celdas de tabla
-    private void addTableRow(Table table, String label, String value) {
-        table.addCell(new Cell().add(new Paragraph(label).setFont(normalFont).setFontSize(normalSize)));
-        table.addCell(new Cell().add(new Paragraph(value).setFont(normalFont).setFontSize(normalSize)));
-    }
+    private String getDownloadsFolder() {
+        String home = System.getProperty("user.home");
+        String os = System.getProperty("os.name").toLowerCase();
 
-    private void addTableCell(Table table, String content) {
-        table.addCell(new Cell()
-                .add(new Paragraph(content)
-                        .setFont(normalFont)
-                        .setFontSize(normalSize)));
-    }
-
-    private void addTableHeaderCell(Table table, String content) {
-        table.addCell(new Cell()
-                .add(new Paragraph(content)
-                        .setFont(headerFont)
-                        .setFontSize(normalSize)
-                        .setBold())
-                .setBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f));
+        if (os.contains("win")) {
+            return Paths.get(home, "Downloads").toString();
+        } else if (os.contains("mac")) {
+            return Paths.get(home, "Downloads").toString();
+        } else if (os.contains("nix") || os.contains("nux")) {
+            return Paths.get(home, "Descargas").toString();
+        } else {
+            return null;
+        }
     }
 }

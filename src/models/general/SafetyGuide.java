@@ -4,11 +4,7 @@ import control.SafetyGuideController;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class SafetyGuide implements Serializable {
     private static final long serialVersionUID = 1L; // Versión para evitar problemas de compatibilidad
@@ -19,7 +15,7 @@ public abstract class SafetyGuide implements Serializable {
     private LocalDateTime creationDate;
 
     // Atributos de la segunda clase
-    protected Map<String, String> riesgosYPrevenciones = new HashMap<>();
+    protected HashMap<String, String> riesgosYPrevenciones = new HashMap<>();
     protected List<String> checklist = new ArrayList<>();
 
     public SafetyGuide() {
@@ -80,4 +76,10 @@ public abstract class SafetyGuide implements Serializable {
     public String getId() { return id; }
     public User getUser() { return user; }
     public LocalDateTime getCreationDate() { return creationDate; }
+    public List<String> getRisks() {
+        return new ArrayList<String>(riesgosYPrevenciones.keySet());
+    }
+    public Collection<String> getPreventions() {
+        return riesgosYPrevenciones.values();
+    }
 }
