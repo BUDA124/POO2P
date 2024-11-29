@@ -10,9 +10,9 @@
 
 <AnchorPane prefHeight="759.0" prefWidth="1204.0" style="-fx-background-color: F6D79D;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.InformationMenuController">
    <children>
-      <Pane layoutX="54.0" layoutY="29.0" prefHeight="94.0" prefWidth="1107.0" style="-fx-background-color: E5B93F;">
+      <Pane layoutX="141.0" layoutY="32.0" prefHeight="94.0" prefWidth="955.0" style="-fx-background-color: E5B93F;">
          <children>
-            <Label layoutX="172.0" layoutY="25.0" text="¿Sobre qué aspecto te gustaría obtener más información?" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="96.0" layoutY="25.0" text="¿Sobre qué aspecto te gustaría obtener más información?" textFill="WHITE">
                <font>
                   <Font size="30.0" />
                </font>
@@ -29,12 +29,12 @@
             <Font name="Yu Gothic UI Semibold" size="30.0" />
          </font>
       </Button>
-      <Button fx:id="obrasButton" alignment="CENTER_RIGHT" layoutX="767.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleObrasButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text="Tipos de Obras" textFill="#ff903b">
+      <Button fx:id="obrasButton" alignment="CENTER_RIGHT" layoutX="751.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleObrasButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text="Tipos de Obras" textFill="#ff903b">
          <font>
             <Font name="Yu Gothic UI Semibold" size="30.0" />
          </font>
       </Button>
-      <Button fx:id="riesgosButton" alignment="CENTER_RIGHT" layoutX="767.0" layoutY="506.0" mnemonicParsing="false" onAction="#handleRiesgosButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text=" Riesgos Comúnes" textFill="#ff903b">
+      <Button fx:id="riesgosButton" alignment="CENTER_RIGHT" layoutX="751.0" layoutY="506.0" mnemonicParsing="false" onAction="#handleRiesgosButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text=" Riesgos Comúnes" textFill="#ff903b">
          <font>
             <Font name="Yu Gothic UI Semibold" size="30.0" />
          </font>
@@ -44,7 +44,7 @@
             <Image url="@images/Taladro.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="76.0" fitWidth="105.0" layoutX="782.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="76.0" fitWidth="105.0" layoutX="772.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/Maquina.png" />
          </image>
@@ -54,9 +54,14 @@
             <Image url="@images/HumbleGuy.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="68.0" fitWidth="56.0" layoutX="782.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="68.0" fitWidth="56.0" layoutX="761.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/Advertencia.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="88.0" fitWidth="91.0" layoutX="23.0" layoutY="38.0" onMouseClicked="#returnImageHandler" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/SignoRetroceso.png" />
          </image>
       </ImageView>
    </children>
