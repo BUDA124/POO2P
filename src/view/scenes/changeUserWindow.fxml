@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="759.0" prefWidth="1204.0" style="-fx-background-color: EC9D72;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.ChangeUserController">
+   <children>
+      <TextField fx:id="correoElectronicoTextField" layoutX="327.0" layoutY="320.0" prefHeight="54.0" prefWidth="551.0" promptText="Ingresa tu correo electrónico" />
+      <Button fx:id="solicitarUsuarioButton" layoutX="524.0" layoutY="410.0" mnemonicParsing="false" onAction="#validarYEnviarUsuario" prefHeight="44.0" prefWidth="158.0" text="Solicitar Usuario" textFill="#ff8b1f">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="goBackButton" layoutX="502.0" layoutY="482.0" text="Regresar a Inicio de Sesión" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="mensajeLabel" layoutX="400.0" layoutY="550.0" text="" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

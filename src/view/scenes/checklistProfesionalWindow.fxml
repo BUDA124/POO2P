@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="840.0" prefWidth="1204.0" style="-fx-background-color: DEA988;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.ChecklistProfesionalesController">
+   <children>
+      <Pane layoutX="32.0" layoutY="31.0" prefHeight="769.0" prefWidth="1139.0" style="-fx-background-color: FDFDFD;">
+         <children>
+            <CheckBox fx:id="albanilCheckBox" layoutX="77.0" layoutY="105.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="196.0" text="Albañil">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <Label layoutX="77.0" layoutY="47.0" text="Selecciona los distintos profesionales que trabajarán en la obra:">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Label>
+            <Text layoutX="77.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si seleccionaste la última opción, se rellenará en la guía riesgos y prevenciones asociadas básicas. Para más información de tipos de profesionales en una obra de contrucción más información en “Conocer más sobre riesgos” en el menú principal." wrappingWidth="1034.13671875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <CheckBox fx:id="peonesCheckBox" layoutX="77.0" layoutY="163.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="556.0" text="Peones de Construcción de Edificios">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="electricistaCheckBox" layoutX="77.0" layoutY="219.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="556.0" text="Electricistas de la Construcción y Afines">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="pintoresCheckBox" layoutX="77.0" layoutY="281.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="578.0" text="Pintores y Empapeladores">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="encofradoresCheckBox" layoutX="77.0" layoutY="336.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="623.0" text="Encofradores y Operarios de Hormigón">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="oficialesCheckBox" layoutX="77.0" layoutY="397.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="983.0" text="Oficiales, Operarios y Artesanos de Otros Oficios">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="montadoresCheckBox" layoutX="77.0" layoutY="452.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="747.0" text="Montadores de Estructuras Metálicas">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="ningunoCheckBox" layoutX="77.0" layoutY="514.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="784.0" text="Ninguna de las anteriores">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <Button fx:id="siguienteButton" layoutX="468.0" layoutY="672.0" mnemonicParsing="false" onAction="#handleSiguienteButtonAction" prefHeight="68.0" prefWidth="163.0" style="-fx-background-color: DEA988;" text="Siguiente" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semibold" size="26.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

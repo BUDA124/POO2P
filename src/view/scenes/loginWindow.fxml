@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane accessibleRole="IMAGE_VIEW" prefHeight="759.0" prefWidth="1204.0" style="-fx-background-color: EC9D72;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.LoginController">
+   <children>
+      <TextField fx:id="usernameTextField" layoutX="356.0" layoutY="380.0" prefHeight="44.0" prefWidth="534.0" promptText="Username" />
+      <TextField fx:id="passwordTextField" layoutX="356.0" layoutY="468.0" prefHeight="44.0" prefWidth="534.0" promptText="Password" />
+      <Button fx:id="loginButton" layoutX="560.0" layoutY="541.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="54.0" prefWidth="126.0" text="LOGIN" textFill="#dd7424" />
+      <Label fx:id="registerButton" layoutX="531.0" layoutY="610.0" onMouseClicked="#handleRegisterButtonAction" text="¿No tienes una cuenta?" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="forgotPasswordButton" layoutX="518.0" layoutY="648.0" onMouseClicked="#handleForgotPasswordButtonAction" text="¿Olvidaste tu contraseña?" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="183.0" layoutY="316.0" text="Inicia sesión y  consigue una guía de seguridad personalizada para tu proyecto." textFill="WHITE">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="532.0" layoutY="690.0" onMouseClicked="#handleForgotUserButtonAction" text="¿Olvidaste tu usuario?" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

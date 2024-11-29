@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="845.0" prefWidth="1204.0" style="-fx-background-color: FFC68C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.MainMenuController">
+   <children>
+      <Pane layoutX="36.0" layoutY="14.0" prefHeight="60.0" prefWidth="1132.0" style="-fx-background-color: E9AA6C;">
+         <children>
+            <Label layoutX="-4.0" layoutY="13.0" prefHeight="36.0" prefWidth="1031.0" text="¡Bienvenido [Usuario]! ¿Qué te gustaría hacer a continuación? Selecciona una opción:" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="generarGuiaButton" layoutX="462.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleGenerarGuiaAction" prefHeight="36.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Genera una guía de seguridad" textFill="#d9974c">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="accederGuiaButton" layoutX="462.0" layoutY="327.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Accede a tus guías guardadas" textFill="#d9974c">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="conocerRiesgosButton" layoutX="462.0" layoutY="465.0" mnemonicParsing="false" onAction="#handleConocerRiesgosAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Conocer más sobre riesgos" textFill="#d9974c">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="feedbackButton" layoutX="462.0" layoutY="595.0" mnemonicParsing="false" onAction="#handleFeedbackAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Realizar sugerencia" textFill="#d9974c">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="logoutButton" layoutX="462.0" layoutY="735.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Cerrar sesión" textFill="#d9974c">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

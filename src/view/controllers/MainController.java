@@ -1,35 +1,39 @@
 package view.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-
-import java.io.IOException;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 public class MainController {
 
     @FXML
-    private void handleOpenWindow(ActionEvent event) {
-        try {
-            // Cargar el archivo FXML de la segunda ventana
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/scenes/SecondWindow.fxml"));
-            Parent root = fxmlLoader.load();
+    private TextField usernameField;
 
-            // Crear un nuevo stage
-            Stage stage = new Stage();
-            stage.setTitle("Second Window");
-            stage.setScene(new Scene(root));
+    @FXML
+    private TextField passwordField;
 
-            // Hacer que la ventana sea modal
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait(); // Espera hasta que se cierre
+    @FXML
+    private Button loginButton;
 
-        } catch (IOException e) {
-            e.printStackTrace();
+    // Método para inicializar el controlador
+    @FXML
+    public void initialize() {
+        // Puedes inicializar cosas aquí si es necesario
+    }
+
+    // Método para manejar el evento de clic en el botón
+    @FXML
+    private void handleLoginButtonAction() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        // Aquí puedes agregar la lógica para verificar las credenciales
+        if (username.equals("admin") && password.equals("1234")) {
+            System.out.println("¡Inicio de sesión exitoso!");
+            // Puedes cambiar de escena o mostrar un mensaje
+        } else {
+            System.out.println("Usuario o contraseña incorrectos.");
+            // Mostrar alerta o mensaje de error
         }
     }
 }

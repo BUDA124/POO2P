@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="840.0" prefWidth="1204.0" style="-fx-background-color: DEA988;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.ChecklistObraController">
+   <children>
+      <Pane layoutX="35.0" layoutY="29.0" prefHeight="788.0" prefWidth="1131.0" style="-fx-background-color: FDFDFD;">
+         <children>
+            <Label layoutX="47.0" layoutY="33.0" text="Selecciona el tipo de obra de construcción en tu proyecto:">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="obraCivilCheckBox" layoutX="47.0" layoutY="87.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="196.0" text="Obra civil">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="edificacionCheckBox" layoutX="47.0" layoutY="146.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="196.0" text="Edificación">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="obraResidencialCheckBox" layoutX="47.0" layoutY="214.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="393.0" text="Obra Residencial">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="obraIndustrialCheckBox" layoutX="47.0" layoutY="282.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="379.0" text="Obra Industrial">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="obraComercialCheckBox" layoutX="47.0" layoutY="350.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="580.0" text="Obra comercial">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="obraInstitucionalCheckBox" layoutX="47.0" layoutY="418.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="542.0" text="Obra de construcciones institucionales">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="obraPublicaCheckBox" layoutX="47.0" layoutY="486.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="535.0" text="Obra de construcción pública">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="ningunaCheckBox" layoutX="47.0" layoutY="554.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="938.0" text="Ninguna de las anteriores">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <Text layoutX="47.0" layoutY="641.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si seleccionaste la última opción, se rellenará en la guía riesgos y prevenciones asociadas básicas. Para más información de tipos de obra de contrucción más información en “Conocer más sobre riesgos” en el menú principal." wrappingWidth="1050.3125">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="siguienteButton" layoutX="484.0" layoutY="691.0" mnemonicParsing="false" onAction="#handleSiguienteButtonAction" prefHeight="68.0" prefWidth="163.0" style="-fx-background-color: DEA988;" text="Siguiente" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semibold" size="26.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

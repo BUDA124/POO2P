@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="759.0" prefWidth="1204.0" style="-fx-background-color: F6D79D;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.InformationMenuController">
+   <children>
+      <Pane layoutX="54.0" layoutY="29.0" prefHeight="94.0" prefWidth="1107.0" style="-fx-background-color: E5B93F;">
+         <children>
+            <Label layoutX="172.0" layoutY="25.0" text="¿Sobre qué aspecto te gustaría obtener más información?" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="herramientasButton" layoutX="147.0" layoutY="267.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Herramientas" textFill="#ff903b">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="profesionalesButton" layoutX="147.0" layoutY="506.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Profesionales" textFill="#ff903b">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="obrasButton" layoutX="767.0" layoutY="267.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Tipos de Obras" textFill="#ff903b">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="riesgosButton" layoutX="767.0" layoutY="506.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Riesgos Comúnes" textFill="#ff903b">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="30.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
