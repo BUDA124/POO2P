@@ -1,10 +1,13 @@
 package view.controllers;
 
+import control.SystemController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import models.services.MailService;
 
 public class ChangeUserController {
 
@@ -32,32 +35,19 @@ public class ChangeUserController {
     }
     @FXML
     private void validarYEnviarUsuario() {
+        SystemController controller = SystemController.getInstance();
+        MailService mailService = controller.getMailService();
         String correo = correoElectronicoTextField.getText();
-
-
-        if (correo == null || correo.isEmpty()) {
-            mostrarMensaje("Ingresa un correo electrónico.", Color.RED);
-            return;
-        }
-
-
-        if (!correo.contains("@") || !correo.contains(".")) {
-            mostrarMensaje("Tu correo no parece estar en el formato correcto.", Color.RED);
-            return;
-        }
-
-
-        enviarUsuario(correo);
-        mostrarMensaje("Tu usuario ha sido enviado al correo dado.", Color.GREEN);
+        mailService.notifyForgottenUsername(correo);
+        Alert.AlertType alertType = Alert.AlertType.INFORMATION;
+        mostrarAlerta(alertType, "Envío de correo", "Correo enviado a " + correo);
     }
-    @FXML
-    private void enviarUsuario(String correo) {
 
-        System.out.println("Nombre de usuario enviado a: " + correo);
-    }
-    @FXML
-    private void mostrarMensaje(String mensaje, Color color) {
-        mensajeLabel.setTextFill(color);
-        mensajeLabel.setText(mensaje);
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

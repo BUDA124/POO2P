@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -13,7 +15,7 @@
       <TextField fx:id="correoElectronicoTextField" layoutX="256.0" layoutY="414.0" prefHeight="47.0" prefWidth="721.0" promptText="Correo electrónico" />
       <TextField fx:id="passwordTextField" layoutX="256.0" layoutY="476.0" prefHeight="47.0" prefWidth="721.0" promptText="Contraseña" />
       <TextField fx:id="confirmationPasswordTextField" layoutX="256.0" layoutY="533.0" prefHeight="47.0" prefWidth="721.0" promptText="Confirma tu contraseña" />
-      <Button fx:id="createAccountButton" layoutX="537.0" layoutY="635.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="131.0" text="Crear" textFill="#ff8341" onAction="#handleCreateAccount">
+      <Button fx:id="createAccountButton" layoutX="537.0" layoutY="635.0" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="47.0" prefWidth="131.0" text="Crear" textFill="#ff8341">
          <font>
             <Font name="Yu Gothic UI Semibold" size="21.0" />
          </font>
@@ -28,7 +30,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="loginButton" layoutX="518.0" layoutY="699.0" text="¿Tienes una cuenta?" textFill="WHITE" onMouseClicked="#handleGoToLogin">
+      <Label fx:id="loginButton" layoutX="518.0" layoutY="699.0" onMouseClicked="#handleGoToLogin" text="¿Tienes una cuenta?" textFill="WHITE">
          <font>
             <Font size="19.0" />
          </font>
@@ -38,5 +40,10 @@
             <Font size="16.0" />
          </font>
       </Label>
+      <ImageView fitHeight="160.0" fitWidth="169.0" layoutX="523.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/PersonaConMas.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -1,10 +1,18 @@
 package view.controllers;
 
+import control.SystemController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import models.general.User;
+import models.services.MailService;
+import models.services.SafetyGuideService;
+import models.services.UserService;
+
+import java.util.HashMap;
 
 public class RegisterController {
 
@@ -47,42 +55,83 @@ public class RegisterController {
 
     @FXML
     private void handleGoToLogin() {
-        SceneController.changeScene("/path/to/loginWindow.fxml");
+        SceneController.changeScene("/view/scenes/loginWindow.fxml");
     }
 
     @FXML
     private void handleCreateAccount() {
-        String password = passwordTextField.getText();
-        String confirmPassword = confirmationPasswordTextField.getText();
 
-        if (password == null || confirmPassword == null || password.isEmpty() || confirmPassword.isEmpty()) {
-            mostrarMensaje("Completa todos los campos.", Color.RED);
+        SystemController controller = SystemController.getInstance();
+        UserService userService = controller.getUserService();
+        SafetyGuideService guideService = controller.getGuideService();
+
+        // Cargar usuarios existentes como un HashMap
+        HashMap<String, User> userHashMap = userService.findAll();
+
+        String nombreCompleto = nombreCompletoTextField.getText();
+        if (nombreCompleto == null || nombreCompleto.isEmpty()) {
+            Alert.AlertType alertType = Alert.AlertType.ERROR;
+            mostrarAlerta(alertType, "Nombre vacio", "No puede dejar vacío el espacio de ingresar nombre completo.");
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
-            mostrarMensaje("Las contraseñas no coinciden.", Color.RED);
-            return;
+        String nombreUsuario;
+        while (true) {
+            nombreUsuario = nombreUsuarioTextField.getText();
+
+            if (nombreUsuario == null || nombreUsuario.isEmpty()) {
+                Alert.AlertType alertType = Alert.AlertType.ERROR;
+                mostrarAlerta(alertType, "Nombre de usuario vacio", "No puede dejar vacío el espacio de ingresar nombre de usuario.");
+                return;
+            }
+
+            // Verificar si el nombre de usuario ya existe
+            if (userHashMap.containsKey(nombreUsuario)) {
+                Alert.AlertType alertType = Alert.AlertType.ERROR;
+                mostrarAlerta(alertType, "Nombre de usuario existente", "Elija otro nombre de usuario que esté disponible.");
+                return;
+            } else {
+                break; // Nombre de usuario válido
+            }
         }
 
-        if (!validarContraseña(password)) {
-            mostrarMensaje("La contraseña debe tener entre 5 y 10 caracteres e incluir un número o carácter especial.", Color.RED);
-            return;
+        String contrasena;
+        String confirmarContrasena;
+        while (true) {
+            contrasena = passwordTextField.getText();
+            confirmarContrasena = confirmationPasswordTextField.getText();
+
+            if (contrasena == null || confirmarContrasena == null || contrasena.isEmpty() || confirmarContrasena.isEmpty()) {
+                Alert.AlertType alertType = Alert.AlertType.ERROR;
+                mostrarAlerta(alertType, "Contraseña vacía", "No puede dejar vacío el espacio de ingresar contraseña.");
+                return;
+            }
+
+            if (!contrasena.equals(confirmarContrasena)) {
+                Alert.AlertType alertType = Alert.AlertType.ERROR;
+                mostrarAlerta(alertType, "Contraseñas no coinciden", "Asegúrese que ingresó la misma contraseña en los dos espacios.");
+                return;
+            } else {
+                break; // Contraseña válida
+            }
         }
 
-        mostrarMensaje("Cuenta creada exitosamente.", Color.BLUE);
-        System.out.println("Bienvenido(a) " + nombreUsuarioTextField.getText());
+        // Crear un nuevo usuario
+        User nuevoUsuario = new User(nombreCompleto, nombreUsuario, contrasena);
+
+        // Agregar el nuevo usuario al HashMap
+        userService.save(nuevoUsuario);
+        guideService.createArrayForUser(nuevoUsuario.getUsername());
+
+        Alert.AlertType alertType = Alert.AlertType.INFORMATION;
+        mostrarAlerta(alertType, "Nuevo usuario creado", "Bienvenido(a), tu usuario se ha creado exitosamente.");
     }
 
-    private boolean validarContraseña(String password) {
-        if (password.length() < 5 || password.length() > 10) {
-            return false;
-        }
-        return password.matches(".*[0-9!@#$%^&*].*");
-    }
-
-    private void mostrarMensaje(String mensaje, Color color) {
-        mensajeLabel.setTextFill(color);
-        mensajeLabel.setText(mensaje);
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

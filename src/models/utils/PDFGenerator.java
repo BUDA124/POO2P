@@ -136,9 +136,6 @@ public class PDFGenerator {
                 .setFont(headerFont)
                 .setFontSize(headerSize));
         document.add(new Paragraph("Nombre: " + user.getName()).setFont(normalFont).setFontSize(normalSize));
-        document.add(new Paragraph("Rol: " + user.getRole()).setFont(normalFont).setFontSize(normalSize));
-        document.add(new Paragraph("Empresa: " + user.getCompany()).setFont(normalFont).setFontSize(normalSize));
-        document.add(new Paragraph("Contacto: " + user.getContactInfo()).setFont(normalFont).setFontSize(normalSize));
         document.add(new Paragraph().setHeight(spacing));
     }
 

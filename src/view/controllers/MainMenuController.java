@@ -26,6 +26,9 @@ public class MainMenuController {
     }
 
     @FXML
+    public void handleAccederGuiaAction() {SceneController.changeScene("/view/scenes/accederGuiasWindow.fxml"); }
+
+    @FXML
     public void handleConocerRiesgosAction() {
         SceneController.changeScene("/view/scenes/informationMenuWindow.fxml");
     }

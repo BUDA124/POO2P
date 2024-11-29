@@ -4,34 +4,82 @@ import models.general.BasicSafetyGuide;
 import models.general.CustomSafetyGuide;
 import models.general.SafetyGuide;
 import models.general.User;
+import models.repositories.FileBasedSafetyGuideRepository;
+import models.repositories.FileBasedUserRepository;
 import models.services.SafetyGuideService;
 import models.services.MailService;
 import models.services.UserService;
 import models.utils.PDFGenerator;
+import view.controllers.ChecklistController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class SystemController {
+    private static SystemController instance;
+
     private final SafetyGuideService guideService;
     private final UserService userService;
     private final Scanner scanner;
     private final MailService mailService;
     private final PDFGenerator pdfGenerator;
     private User currentUser;
+    private SafetyGuide currentSafetyGuide;
 
-    public SystemController(SafetyGuideService guideService, UserService userService,
-                            MailService mailService, PDFGenerator pdfGenerator) {
-        this.guideService = guideService;
-        this.userService = userService;
-        this.mailService = mailService;
-        this.pdfGenerator = pdfGenerator;
+    private SystemController() {
+        this.guideService = new SafetyGuideService(new FileBasedSafetyGuideRepository());
+        this.userService = new UserService(new FileBasedUserRepository());
+        this.mailService = new MailService();
+        this.pdfGenerator = new PDFGenerator();
         this.scanner = new Scanner(System.in);
-
     }
 
+    // Método público estático para obtener la instancia única
+    public static SystemController getInstance() {
+        if (instance == null) {
+            synchronized (SystemController.class) { // Bloque synchronized para seguridad en hilos
+                if (instance == null) {
+                    instance = new SystemController();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public SafetyGuide getCurrentSafetyGuide() {
+        return currentSafetyGuide;
+    }
+
+    public void setCurrentSafetyGuide(SafetyGuide currentSafetyGuide) {
+        this.currentSafetyGuide = currentSafetyGuide;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public SafetyGuideService getGuideService() {
+        return guideService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public MailService getMailService() {
+        return mailService;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public PDFGenerator getPdfGenerator() {
+        return pdfGenerator;
+    }
 
     // Actualizar el método showMainMenu() para incluir la opción de generar PDF
     private void showMainMenu() {
@@ -193,7 +241,7 @@ public class SystemController {
         }
 
         // Crear un nuevo usuario
-        User nuevoUsuario = new User(nombreCompleto, nombreUsuario, rol, compania, contacto, contrasena);
+        User nuevoUsuario = new User(nombreCompleto, nombreUsuario, contrasena);
 
         // Agregar el nuevo usuario al HashMap
         userService.save(nuevoUsuario);
@@ -245,7 +293,7 @@ public class SystemController {
         String correo = scanner.nextLine();
         mailService.notifyForgottenUsername(correo);
         System.out.println("Se ha enviado información sobre la recuperación de usuario al correo: " + correo);
-    }
+         }
 
     public void offerFeedback() {
         System.out.print("Asunto: ");
@@ -286,7 +334,6 @@ public class SystemController {
                     System.out.println("Opción inválida. Por favor, intente nuevamente.");
             }
         }
-
     }
 
     private void createNewGuide() {
@@ -317,17 +364,19 @@ public class SystemController {
     public void createBasicGuide() {
         SafetyGuide guiaBasica = new BasicSafetyGuide();
         guiaBasica.generarChecklist();
-        guiaBasica.mostrarRiesgosYPrevenciones();
-        guiaBasica.interactuarChecklist(scanner);
         guideService.save(currentUser.getUsername(), guiaBasica);
     }
 
     public void createCustomGuide() {
-        CustomSafetyGuide guiaPersonalizada = new CustomSafetyGuide();
-        guiaPersonalizada.mostrarRiesgosYPrevenciones();
-        guiaPersonalizada.interactuarChecklist(scanner);
+        List<String> areasDeTrabajo = ChecklistController.getSelectedWorks();
+        List<String> profesionales = ChecklistController.getSelectedProfessionals();
+        List<String> herramientas = ChecklistController.getSelectedTools();
+        CustomSafetyGuide guiaPersonalizada = new CustomSafetyGuide(areasDeTrabajo, profesionales, herramientas);
         guideService.save(currentUser.getUsername(), guiaPersonalizada);
+
+        System.out.println("Guía personalizada creada y guardada con éxito.");
     }
+
 
     public void accessSavedGuides() {
         ArrayList<SafetyGuide> guideArrayList = obtenerGuiasDelUsuario();
@@ -345,7 +394,14 @@ public class SystemController {
         }
     }
 
-    private ArrayList<SafetyGuide> obtenerGuiasDelUsuario() {
+    public void extraerInfoDeGuia(SafetyGuide guide) {
+        Map<String, Object> datos = guide.obtenerDatos();
+
+        List<String> checklist = (List<String>) datos.get("checklist");
+        Map<String, String> riesgosYPrevenciones = (Map<String, String>) datos.get("riesgosYPrevenciones");
+    }
+
+        private ArrayList<SafetyGuide> obtenerGuiasDelUsuario() {
         return guideService.findById(currentUser.getUsername());
     }
 
@@ -423,4 +479,12 @@ public class SystemController {
         guideService.delete(currentUser.getUsername(), guide);
         createCustomGuide();
     }
+
+    public List<SafetyGuide> getSavedGuidesForCurrentUser() {
+        if (currentUser == null) {
+            throw new IllegalStateException("No hay un usuario conectado.");
+        }
+        return guideService.findById(currentUser.getUsername());
+    }
+
 }

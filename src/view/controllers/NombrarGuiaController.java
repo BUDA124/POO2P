@@ -23,7 +23,7 @@ public class NombrarGuiaController {
             return;
         }
 
-        SceneController.changeScene("/path/to/checklistTipoObraWindow.fxml");
+        SceneController.changeScene("/view/scenes/checklistTipoObraWindow.fxml");
     }
 
     public static String getProjectTitle() {

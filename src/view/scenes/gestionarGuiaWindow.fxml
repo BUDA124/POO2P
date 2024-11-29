@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="920.0" prefWidth="1262.0" style="-fx-background-color: FFD7D7;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GestionarGuiaController">
+   <children>
+      <Pane layoutX="42.0" layoutY="35.0" prefHeight="117.0" prefWidth="1172.0" style="-fx-background-color: ED9F9C;">
+         <children>
+            <Label layoutX="233.0" layoutY="32.0" text="Decide qué cambios deseas hacer en tu guía" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="80.0" fitWidth="72.0" layoutX="14.0" layoutY="23.0" onMouseClicked="#returnImageHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/SignoRetroceso.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Button fx:id="descargarButton" alignment="CENTER_RIGHT" layoutX="76.0" layoutY="452.0" mnemonicParsing="false" onAction="#descargarButtonAction" prefHeight="124.0" prefWidth="315.0" style="-fx-background-color: FFFFFF;" text="Descargar" textAlignment="CENTER" textFill="#f7745e">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="eliminarButton" alignment="CENTER_RIGHT" layoutX="489.0" layoutY="452.0" mnemonicParsing="false" onAction="#deleteButtonAction" prefHeight="124.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Eliminar" textFill="#f7745e">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="editarButton" alignment="CENTER_RIGHT" layoutX="886.0" layoutY="452.0" mnemonicParsing="false" onAction="#editarButtonAction" prefHeight="124.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Editar" textFill="#f7745e">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="36.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="99.0" fitWidth="105.0" layoutX="923.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Lapicero.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="99.0" fitWidth="105.0" layoutX="505.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/3b3c980323576d57a00652619ee25c631e9c639e-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="99.0" fitWidth="105.0" layoutX="93.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/644550b69a921c626d81f34479edfa4f362cd526-removebg-preview.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

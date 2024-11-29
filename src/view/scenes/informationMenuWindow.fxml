@@ -2,10 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="759.0" prefWidth="1204.0" style="-fx-background-color: F6D79D;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.InformationMenuController">
    <children>
@@ -18,25 +19,45 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="herramientasButton" layoutX="147.0" layoutY="267.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Herramientas" textFill="#ff903b">
+      <Button id="herramientasButton" fx:id="herramientasButton" alignment="CENTER_RIGHT" layoutX="147.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleHerramientasButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text="Herramientas" textFill="#ff903b">
          <font>
             <Font name="Yu Gothic UI Semibold" size="30.0" />
          </font>
       </Button>
-      <Button fx:id="profesionalesButton" layoutX="147.0" layoutY="506.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Profesionales" textFill="#ff903b">
+      <Button fx:id="profesionalesButton" alignment="CENTER_RIGHT" layoutX="147.0" layoutY="506.0" mnemonicParsing="false" onAction="#handleProfesionalesButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text="Profesionales" textFill="#ff903b">
          <font>
             <Font name="Yu Gothic UI Semibold" size="30.0" />
          </font>
       </Button>
-      <Button fx:id="obrasButton" layoutX="767.0" layoutY="267.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Tipos de Obras" textFill="#ff903b">
+      <Button fx:id="obrasButton" alignment="CENTER_RIGHT" layoutX="767.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleObrasButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text="Tipos de Obras" textFill="#ff903b">
          <font>
             <Font name="Yu Gothic UI Semibold" size="30.0" />
          </font>
       </Button>
-      <Button fx:id="riesgosButton" layoutX="767.0" layoutY="506.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="285.0" style="-fx-background-color: FFFFFF;" text="Riesgos Comúnes" textFill="#ff903b">
+      <Button fx:id="riesgosButton" alignment="CENTER_RIGHT" layoutX="767.0" layoutY="506.0" mnemonicParsing="false" onAction="#handleRiesgosButton" prefHeight="94.0" prefWidth="330.0" style="-fx-background-color: FFFFFF;" text=" Riesgos Comúnes" textFill="#ff903b">
          <font>
             <Font name="Yu Gothic UI Semibold" size="30.0" />
          </font>
       </Button>
+      <ImageView fitHeight="76.0" fitWidth="105.0" layoutX="169.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Taladro.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="76.0" fitWidth="105.0" layoutX="782.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Maquina.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="76.0" fitWidth="105.0" layoutX="169.0" layoutY="515.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/HumbleGuy.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="68.0" fitWidth="56.0" layoutX="782.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Advertencia.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

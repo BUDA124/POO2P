@@ -69,7 +69,7 @@
             <Font name="System Bold" size="29.0" />
          </font>
       </Label>
-      <Button fx:id="siguienteButton" layoutX="494.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleSiguienteButtonAction" prefHeight="68.0" prefWidth="163.0" style="-fx-background-color: DEA988;" text="Siguiente" textFill="WHITE">
+      <Button fx:id="siguienteButton" layoutX="494.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleCrearButtonAction" prefHeight="68.0" prefWidth="163.0" style="-fx-background-color: DEA988;" text="Crear Guía" textFill="WHITE">
          <font>
             <Font name="Yu Gothic UI Semibold" size="26.0" />
          </font>

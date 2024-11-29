@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -17,30 +19,55 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="generarGuiaButton" layoutX="462.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleGenerarGuiaAction" prefHeight="36.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Genera una guía de seguridad" textFill="#d9974c">
+      <Button fx:id="generarGuiaButton" layoutX="462.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleGenerarGuiaAction" prefHeight="36.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Genera una guía de seguridad" textFill="#d9974c">
          <font>
             <Font name="Yu Gothic UI Semibold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="accederGuiaButton" layoutX="462.0" layoutY="327.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Accede a tus guías guardadas" textFill="#d9974c">
+      <Button fx:id="accederGuiaButton" layoutX="462.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleAccederGuiaAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Accede a tus guías guardadas" textFill="#d9974c">
          <font>
             <Font name="Yu Gothic UI Semibold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="conocerRiesgosButton" layoutX="462.0" layoutY="465.0" mnemonicParsing="false" onAction="#handleConocerRiesgosAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Conocer más sobre riesgos" textFill="#d9974c">
+      <Button fx:id="conocerRiesgosButton" layoutX="462.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleConocerRiesgosAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Conocer más sobre riesgos" textFill="#d9974c">
          <font>
             <Font name="Yu Gothic UI Semibold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="feedbackButton" layoutX="462.0" layoutY="595.0" mnemonicParsing="false" onAction="#handleFeedbackAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Realizar sugerencia" textFill="#d9974c">
+      <Button fx:id="feedbackButton" layoutX="462.0" layoutY="590.0" mnemonicParsing="false" onAction="#handleFeedbackAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Realizar sugerencia" textFill="#d9974c">
          <font>
             <Font name="Yu Gothic UI Semibold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="logoutButton" layoutX="462.0" layoutY="735.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Cerrar sesión" textFill="#d9974c">
+      <Button fx:id="logoutButton" layoutX="462.0" layoutY="720.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Cerrar sesión" textFill="#d9974c">
          <font>
             <Font name="Yu Gothic UI Semibold" size="18.0" />
          </font>
       </Button>
+      <ImageView fitHeight="60.0" fitWidth="67.0" layoutX="572.0" layoutY="516.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/ManoConStarBox.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="67.0" layoutX="572.0" layoutY="651.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/ExitIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="67.0" layoutX="567.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/SignoIAmarillo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="67.0" layoutX="567.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/tuercaYEscudo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="67.0" layoutX="567.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Casco2.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

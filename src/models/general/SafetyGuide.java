@@ -63,6 +63,13 @@ public abstract class SafetyGuide implements Serializable {
         }
     }
 
+    public Map<String, Object> obtenerDatos() {
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("checklist", new ArrayList<>(checklist));
+        datos.put("riesgosYPrevenciones", new HashMap<>(riesgosYPrevenciones));
+        return datos;
+    }
+
     // Getters y setters
     public String getId() { return id; }
     public String getTitle() { return title; }
