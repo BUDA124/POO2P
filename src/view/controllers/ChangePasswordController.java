@@ -51,7 +51,7 @@ public class ChangePasswordController {
             Alert.AlertType alertType = Alert.AlertType.ERROR;
             mostrarAlerta(alertType, "Correo inválido", "Rellene la información adecuadamente, con un correo válido.");
         } else {
-            Alert.AlertType alertType = Alert.AlertType.ERROR;
+            Alert.AlertType alertType = Alert.AlertType.INFORMATION;
             mostrarAlerta(alertType, "Correo enviado", "El correo con las intrucciones se ha enviado, puede revisarlo.");
         }
     }

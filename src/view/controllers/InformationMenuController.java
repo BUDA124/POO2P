@@ -45,4 +45,9 @@ public class InformationMenuController {
     public void handleRiesgosButton() {
         SceneController.changeScene("/view/scenes/risksInfoWindow.fxml");
     }
+
+    @FXML
+    private void returnImageHandler() {
+        SceneController.changeScene("/view/scenes/mainMenu.fxml");
+    }
 }
