@@ -37,19 +37,25 @@ public class ChecklistObraController {
 
     @FXML
     public void handleSiguienteButtonAction() {
-        boolean atLeastOneSelected = obraCivilCheckBox.isSelected() ||
-                edificacionCheckBox.isSelected() ||
-                obraResidencialCheckBox.isSelected() ||
-                obraIndustrialCheckBox.isSelected() ||
-                obraComercialCheckBox.isSelected() ||
-                obraInstitucionalCheckBox.isSelected() ||
-                obraPublicaCheckBox.isSelected();
-
-        if (atLeastOneSelected || ningunaCheckBox.isSelected()) {
-
-            SceneController.changeScene("/path/to/checklistProfesionalWindow.fxml");
+        if (ningunaCheckBox.isSelected()) {
+            ChecklistController.getSelectedWorks().clear();
+            ChecklistController.addSelectedWork("Ninguna");
         } else {
+            if (obraCivilCheckBox.isSelected()) ChecklistController.addSelectedWork("Obra Civil");
+            if (edificacionCheckBox.isSelected()) ChecklistController.addSelectedWork("Edificación");
+            if (obraResidencialCheckBox.isSelected()) ChecklistController.addSelectedWork("Obra Residencial");
+            if (obraIndustrialCheckBox.isSelected()) ChecklistController.addSelectedWork("Obra Industrial");
+            if (obraComercialCheckBox.isSelected()) ChecklistController.addSelectedWork("Obra Comercial");
+            if (obraInstitucionalCheckBox.isSelected()) ChecklistController.addSelectedWork("Obra Institucional");
+            if (obraPublicaCheckBox.isSelected()) ChecklistController.addSelectedWork("Obra Pública");
+        }
 
+        boolean atLeastOneSelected = !ChecklistController.getSelectedWorks().isEmpty();
+
+        if (atLeastOneSelected) {
+
+            SceneController.changeScene("/view/scenes/checklistProfesionalWindow.fxml");
+        } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Advertencia");
             alert.setHeaderText("No se ha seleccionado ningún tipo de obra");
@@ -57,6 +63,7 @@ public class ChecklistObraController {
             alert.showAndWait();
         }
     }
+
 
 
     @FXML

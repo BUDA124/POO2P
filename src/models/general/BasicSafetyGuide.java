@@ -12,3 +12,6 @@ public class BasicSafetyGuide extends SafetyGuide {
         this.riesgosYPrevenciones.put("Exposición a ruidos fuertes", "Utilizar protectores auditivos.");
     }
 }
+
+
+

@@ -1,5 +1,6 @@
 package view.controllers;
 
+import control.SystemController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -39,22 +40,33 @@ public class ChecklistHerramientasController {
     private CheckBox ningunaCheckBox;
 
     @FXML
-    private Button siguienteButton;
+    private Button crearButton;
 
     @FXML
-    public void handleSiguienteButtonAction() {
-        boolean atLeastOneSelected = generadorCheckBox.isSelected() ||
-                hormigoneraCheckBox.isSelected() ||
-                placaCheckBox.isSelected() ||
-                carretillaCheckBox.isSelected() ||
-                pistolaCheckBox.isSelected() ||
-                nivelCheckBox.isSelected() ||
-                llavesCheckBox.isSelected() ||
-                serruchoCheckBox.isSelected() ||
-                taladroCheckBox.isSelected();
+    public void handleCrearButtonAction() {
+        if (ningunaCheckBox.isSelected()) {
+            ChecklistController.getSelectedTools().clear();
+            ChecklistController.addSelectedTool("Ninguna");
+        } else {
+            if (generadorCheckBox.isSelected()) ChecklistController.addSelectedTool("Generador");
+            if (hormigoneraCheckBox.isSelected()) ChecklistController.addSelectedTool("Hormigonera");
+            if (placaCheckBox.isSelected()) ChecklistController.addSelectedTool("Placa Vibratoria");
+            if (carretillaCheckBox.isSelected()) ChecklistController.addSelectedTool("Carretilla");
+            if (pistolaCheckBox.isSelected()) ChecklistController.addSelectedTool("Pistola de Clavos");
+            if (nivelCheckBox.isSelected()) ChecklistController.addSelectedTool("Nivel Láser");
+            if (llavesCheckBox.isSelected()) ChecklistController.addSelectedTool("Llaves de Mano");
+            if (serruchoCheckBox.isSelected()) ChecklistController.addSelectedTool("Serrucho");
+            if (taladroCheckBox.isSelected()) ChecklistController.addSelectedTool("Taladro");
+        }
 
-        if (atLeastOneSelected || ningunaCheckBox.isSelected()) {
-            SceneController.changeScene("/path/to/guardarGuiaWindow.fxml");
+        boolean atLeastOneSelected = !ChecklistController.getSelectedTools().isEmpty();
+
+        if (atLeastOneSelected) {
+            SystemController systemController = SystemController.getInstance();
+            systemController.createCustomGuide();
+            Alert.AlertType alertType = Alert.AlertType.INFORMATION;
+            mostrarAlerta(alertType, "Guía Creada", "Se ha creado la guía exitosamente. Puedes accederla en 'Acceder Guías' en el menú principal.");
+            SceneController.changeScene("/view/scenes/guideMenuWindow.fxml");
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Advertencia");
@@ -62,6 +74,7 @@ public class ChecklistHerramientasController {
             alert.setContentText("Seleccione al menos una opción para continuar.");
             alert.showAndWait();
         }
+
     }
 
     @FXML
@@ -93,5 +106,12 @@ public class ChecklistHerramientasController {
         llavesCheckBox.setSelected(false);
         serruchoCheckBox.setSelected(false);
         taladroCheckBox.setSelected(false);
+    }
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

@@ -37,16 +37,23 @@ public class ChecklistProfesionalesController {
 
     @FXML
     public void handleSiguienteButtonAction() {
-        boolean atLeastOneSelected = albanilCheckBox.isSelected() ||
-                peonesCheckBox.isSelected() ||
-                electricistaCheckBox.isSelected() ||
-                pintoresCheckBox.isSelected() ||
-                encofradoresCheckBox.isSelected() ||
-                oficialesCheckBox.isSelected() ||
-                montadoresCheckBox.isSelected();
+        if (ningunoCheckBox.isSelected()) {
+            ChecklistController.getSelectedProfessionals().clear();
+            ChecklistController.addSelectedProfessional("Ninguno");
+        } else {
+            if (albanilCheckBox.isSelected()) ChecklistController.addSelectedProfessional("Albañil");
+            if (peonesCheckBox.isSelected()) ChecklistController.addSelectedProfessional("Peones");
+            if (electricistaCheckBox.isSelected()) ChecklistController.addSelectedProfessional("Electricista");
+            if (pintoresCheckBox.isSelected()) ChecklistController.addSelectedProfessional("Pintores");
+            if (encofradoresCheckBox.isSelected()) ChecklistController.addSelectedProfessional("Encofradores");
+            if (oficialesCheckBox.isSelected()) ChecklistController.addSelectedProfessional("Oficiales");
+            if (montadoresCheckBox.isSelected()) ChecklistController.addSelectedProfessional("Montadores");
+        }
 
-        if (atLeastOneSelected || ningunoCheckBox.isSelected()) {
-            SceneController.changeScene("/path/to/checklistHerramientasWindow.fxml");
+        boolean atLeastOneSelected = !ChecklistController.getSelectedProfessionals().isEmpty();
+
+        if (atLeastOneSelected) {
+            SceneController.changeScene("/view/scenes/checklistHerramientasWindow.fxml");
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Advertencia");
