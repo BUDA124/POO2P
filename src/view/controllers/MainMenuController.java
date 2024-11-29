@@ -6,27 +6,15 @@ import javafx.scene.control.Button;
 public class MainMenuController {
 
     @FXML
-    private Button generarGuiaButton;
-
-    @FXML
-    private Button accederGuiaButton;
-
-    @FXML
-    private Button conocerRiesgosButton;
-
-    @FXML
-    private Button feedbackButton;
-
-    @FXML
-    private Button logoutButton;
-
-    @FXML
     public void handleGenerarGuiaAction() {
         SceneController.changeScene("/view/scenes/guideMenuWindow.fxml");
     }
 
     @FXML
-    public void handleAccederGuiaAction() {SceneController.changeScene("/view/scenes/accederGuiasWindow.fxml"); }
+    public void handleAccederGuiaAction() {
+        System.out.println("Acceder Guia");
+        SceneController.changeScene("/view/scenes/accederGuiasWindow.fxml");
+    }
 
     @FXML
     public void handleConocerRiesgosAction() {

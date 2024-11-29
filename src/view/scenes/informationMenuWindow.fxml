@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="759.0" prefWidth="1204.0" style="-fx-background-color: F6D79D;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.InformationMenuController">
+<AnchorPane onMouseClicked="#returnImageHandler" prefHeight="759.0" prefWidth="1204.0" style="-fx-background-color: F6D79D;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.InformationMenuController">
    <children>
       <Pane layoutX="141.0" layoutY="32.0" prefHeight="94.0" prefWidth="955.0" style="-fx-background-color: E5B93F;">
          <children>
@@ -59,7 +59,7 @@
             <Image url="@images/Advertencia.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="88.0" fitWidth="91.0" layoutX="23.0" layoutY="38.0" onMouseClicked="#returnImageHandler" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="80.0" fitWidth="72.0" layoutX="34.0" layoutY="43.0" mouseTransparent="true" onMouseClicked="#returnImageHandler" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/SignoRetroceso.png" />
          </image>

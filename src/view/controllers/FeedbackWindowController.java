@@ -1,6 +1,7 @@
 package view.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -32,16 +33,25 @@ public class FeedbackWindowController {
             return;
         }
 
-        // Aquí puedes agregar la lógica para procesar la retroalimentación,
-        // como guardarla en una base de datos o enviarla por correo electrónico.
-        System.out.println("Asunto: " + asunto);
-        System.out.println("Descripción: " + descripcion);
+        Alert.AlertType alertType = Alert.AlertType.INFORMATION;
+        mostrarAlerta(alertType, "Feedback recibido", "Tomaremos en cuenta su opinión.");
 
         // Limpiar los campos después de enviar
         asuntoTextField.clear();
         descripcionTextArea.clear();
 
-        // Opcional: Mostrar una confirmación al usuario
-        System.out.println("¡Gracias por tu sugerencia!");
+
+    }
+    @FXML
+    private void returnImageHandler() {
+        SceneController.changeScene("/view/scenes/mainMenuWindow.fxml");
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

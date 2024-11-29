@@ -29,7 +29,7 @@
             <Font name="Yu Gothic UI Semibold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="conocerRiesgosButton" layoutX="462.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleConocerRiesgosAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Conocer más sobre riesgos" textFill="#d9974c">
+      <Button layoutX="462.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleConocerRiesgosAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: FFFFFF;" text="Conocer más sobre riesgos" textFill="#d9974c">
          <font>
             <Font name="Yu Gothic UI Semibold" size="18.0" />
          </font>

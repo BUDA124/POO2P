@@ -48,6 +48,6 @@ public class InformationMenuController {
 
     @FXML
     private void returnImageHandler() {
-        SceneController.changeScene("/view/scenes/mainMenu.fxml");
+        SceneController.changeScene("/view/scenes/mainMenuWindow.fxml");
     }
 }
